@@ -81,10 +81,10 @@ class _MyHomePageState extends State<MyHomePage> {
         // TRY THIS: Try changing the color here to a specific color (to
         // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
         // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Colors.blue,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text('flutter thera project'),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             const Text(
               'You have pushed the button this many times:',
@@ -111,6 +111,20 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Container(
+              width : 150.0,
+              child : TextField(
+                decoration : InputDecoration(
+                  labelText : 'inserisci testo',
+                  focusedBorder: OutlineInputBorder(  //focusedBordered mi permette di modificare l'estetica dei bordi mentre la casella è selezionata
+                    borderSide: BorderSide(
+                      color: Colors.purple, // Colore del bordo
+                      width: 5.0, // Spessore del bordo
+                    ),
+                  ),//per personalizzare qui i bordi mentre la casella non è selezionata dovrei aggiungere enabledBorder
+                ),
+              ),
             ),
           ],
         ),
