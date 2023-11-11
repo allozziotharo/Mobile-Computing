@@ -223,7 +223,7 @@ class SectionWidget extends StatelessWidget {
           style: TextStyle(
             fontSize: 20.0,
             color: Colors.black, //COLORE TITOLO SEZIONI
-            fontFamily: Fonts.fontProva2,
+            fontFamily: 'RussoOne',
             ), 
           textAlign: TextAlign.center, //TITOLO SEZIONI CENTRATO
         ),

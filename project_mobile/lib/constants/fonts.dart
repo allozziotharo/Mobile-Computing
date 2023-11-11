@@ -5,7 +5,7 @@ class Fonts {
     SONO ORA SUDDIVISI PER TIPOLOGIA.
     ESEMPIO 'immagineFormicaRossa' di POO
     */
-    static const String fontTitoliSezioni = 'Russo One';
+    static const String fontTitoliSezioni = 'RussoOne';
     static const String fontProva = 'Open Sans';
-    static const String fontProva2 = 'Roboto';
+
 }
