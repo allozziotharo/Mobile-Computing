@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'constants/costantiGUI.dart';
+import 'constants/Fonts.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,8 +27,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Benvenuto'),
-        centerTitle: true,
+        title: Text(
+          'Select a sphere of your life you want to manage, or create a new one',
+          overflow: TextOverflow.ellipsis,
+          maxLines: 3,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontStyle: FontStyle.italic),
+          ),
+        centerTitle: true,        
+        backgroundColor: Color(costantiGUI.primaryColor),
       ),
       body: ListView(
         children: <Widget>[
@@ -94,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Opzioni della Sezione'),
+          title: Text('Scegli cosa fare'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,13 +174,13 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Sei sicuro?'),
+          title: Text('Eliminare permanentemente la sezione e tutte le informazioni al suo interno?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('NO'),
+              child: Text('No'),
             ),
             TextButton(
               onPressed: () {
@@ -180,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
                 Navigator.of(context).pop();
               },
-              child: Text('SI'),
+              child: Text('Si'),
             ),
           ],
         );
@@ -202,13 +211,21 @@ class SectionWidget extends StatelessWidget {
       onTap: onTap,
       onLongPress: onLongPress,
       child: Container(
-        alignment: Alignment.center,
-        color: Colors.red,
         padding: EdgeInsets.all(16.0),
         margin: EdgeInsets.all(8.0),
+        decoration: BoxDecoration (
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0), //RAGGIO DEL BORDO
+          border: Border.all(color: Color(costantiGUI.secondaryColor), width: 2.0), //CONTORNO
+        ),
         child: Text(
           title,
-          style: TextStyle(fontSize: 20.0, color: Colors.white),
+          style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.black, //COLORE TITOLO SEZIONI
+            fontFamily: Fonts.fontProva2,
+            ), 
+          textAlign: TextAlign.center, //TITOLO SEZIONI CENTRATO
         ),
       ),
     );
@@ -229,7 +246,7 @@ class AddSectionButton extends StatelessWidget {
         height: 40.0,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.red,
+          color: Color(costantiGUI.secondaryColor),
           borderRadius: BorderRadius.circular(20.0),
         ),
         child: Text(
