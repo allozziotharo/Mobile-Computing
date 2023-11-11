@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -126,6 +127,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+            ElevatedButton(
+              child: const Text('Open route'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const nuovaPagina()),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -137,3 +147,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
