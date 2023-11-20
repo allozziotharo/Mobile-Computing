@@ -1,8 +1,9 @@
+import 'package:project_mobile/hierarchy/Section.dart';
 abstract class PoolFunzionalita {
-  void aggiungiSezione(){
+  
+  Future<Section?> aggiungiSezione(String titolo);
 
-  };
-
+/*
   void aggiungiValoreNumericoIllimitato(){
 
   };
@@ -42,4 +43,5 @@ abstract class PoolFunzionalita {
   void implementaCalendario(){
 
   };
+  commentate finché non le implemento sennò me spara un errore inutile*/
 }

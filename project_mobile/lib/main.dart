@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'constants/costantiGUI.dart';
 import 'constants/Fonts.dart';
+import 'hierarchy/Section.dart';//duplicato ma ntoccamo niente per ora
+import 'package:project_mobile/hierarchy/Section.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> sectionTitles = ['Sezione 1', 'Sezione 2'];
+  List<Section> sections = [];
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +41,19 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: ListView(
         children: <Widget>[
-          for (int i = 0; i < sectionTitles.length; i++)
+          for (int i = 0; i < sections.length; i++)
             SectionWidget(
-              title: sectionTitles[i],
+              section: sections[i],
               onTap: () {
                 // Implementa la logica per toccare una sezione esistente, se necessario
               },
               onLongPress: () {
-                _showSectionContextMenu(sectionTitles[i]);
+                _showSectionContextMenu(sections[i]);
               },
             ),
           AddSectionButton(
             onTap: () {
-              _showAddSectionDialog();
+              _showAddSectionDialog(context);
             },
           ),
         ],
@@ -59,10 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showAddSectionDialog() {
+  void _showAddSectionDialog() async {
     String newSectionTitle = '';
 
-    showDialog(
+    Section? nuovaSezione = await showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -82,11 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
             TextButton(
               onPressed: () {
                 if (newSectionTitle.isNotEmpty) {
-                  setState(() {
-                    sectionTitles.add(newSectionTitle);
-                  });
+                  Navigator.of(context).pop(Section(titolo: newSectionTitle));
                 }
-                Navigator.of(context).pop();
               },
               child: Text('OK'),
             ),
@@ -94,10 +93,15 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
     );
+
+    if (nuovaSezione != null) {
+      setState(() {
+        sections.add(nuovaSezione);
+      });
+    }
   }
 
-  void _showSectionContextMenu(String title) {
-    String newSectionTitle = title;
+  void _showSectionContextMenu(Section section) {
 
     showDialog(
       context: context,
@@ -113,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: Text('Rinomina Sezione'),
                 onTap: () {
                   Navigator.of(context).pop(); // Chiudi la finestra di dialogo corrente
-                  _showRenameSectionDialog(title);
+                  _showRenameSectionDialog(section);
                 },
               ),
               ListTile(
@@ -121,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: Text('Elimina Sezione'),
                 onTap: () {
                   Navigator.of(context).pop(); // Chiudi la finestra di dialogo corrente
-                  _showDeleteSectionDialog(title);
+                  _showDeleteSectionDialog(section);
                 },
               ),
             ],
@@ -131,10 +135,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showRenameSectionDialog(String sectionTitle) {
-    String newSectionTitle = sectionTitle;
+  void _showRenameSectionDialog(Section section) async {
+    String newSectionTitle = section.titolo;
 
-    showDialog(
+    await showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -155,8 +159,8 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 if (newSectionTitle.isNotEmpty) {
                   setState(() {
-                    sectionTitles.remove(sectionTitle);
-                    sectionTitles.add(newSectionTitle);
+                    sections.remove(section);
+                    sections.add(Section(titolo: newSectionTitle));
                   });
                 }
                 Navigator.of(context).pop();
@@ -169,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showDeleteSectionDialog(String sectionTitle) {
+  void _showDeleteSectionDialog(Section section) {
     showDialog(
       context: context,
       builder: (context) {
@@ -185,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  sectionTitles.remove(sectionTitle);
+                  sections.remove(section);
                 });
                 Navigator.of(context).pop();
               },
@@ -199,11 +203,11 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class SectionWidget extends StatelessWidget {
-  final String title;
+  final Section section;
   final VoidCallback onTap;
   final VoidCallback onLongPress;
 
-  SectionWidget({required this.title, required this.onTap, required this.onLongPress});
+  SectionWidget({required this.section, required this.onTap, required this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
@@ -219,7 +223,7 @@ class SectionWidget extends StatelessWidget {
           border: Border.all(color: Color(costantiGUI.secondaryColor), width: 2.0), //CONTORNO
         ),
         child: Text(
-          title,
+          section.titolo,
           style: TextStyle(
             fontSize: 20.0,
             color: Colors.black, //COLORE TITOLO SEZIONI
