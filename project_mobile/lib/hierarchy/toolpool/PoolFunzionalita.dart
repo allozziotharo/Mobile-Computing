@@ -1,7 +1,8 @@
 import 'package:project_mobile/hierarchy/Section.dart';
+import 'package:flutter/src/widgets/framework.dart';
 abstract class PoolFunzionalita {
   
-  Future<Section?> aggiungiSezione(String titolo);
+  Future<Section?> aggiungiSezione(BuildContext context, String titolo);
 
 /*
   void aggiungiValoreNumericoIllimitato(){
