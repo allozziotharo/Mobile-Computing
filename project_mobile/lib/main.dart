@@ -3,7 +3,7 @@ import 'constants/costantiGUI.dart';
 import 'constants/Fonts.dart';
 import 'hierarchy/Section.dart';//duplicato ma ntoccamo niente per ora
 import 'package:project_mobile/hierarchy/Section.dart';
-import 'package:project_mobile/screens/screen.dart';
+import 'package:project_mobile/screens/homepage.dart';
 
 void main() {
   runApp(MyApp());
