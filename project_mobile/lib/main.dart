@@ -4,6 +4,9 @@ import 'constants/Fonts.dart';
 import 'hierarchy/Section.dart';//duplicato ma ntoccamo niente per ora
 import 'package:project_mobile/hierarchy/Section.dart';
 import 'package:project_mobile/screens/homepage.dart';
+import 'package:project_mobile/screens/loginpage.dart';
+import 'package:project_mobile/screens/settingspage.dart';
+import 'package:project_mobile/route/route.dart' as route;
 
 void main() {
   runApp(MyApp());
@@ -14,7 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       //home: HomeScreen(),
-      home: HomePage(),
+      //home: HomePage(),
+      onGenerateRoute: route.controller,
+      initialRoute: route.loginPage,
     );
   }
 }

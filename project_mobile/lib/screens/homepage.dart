@@ -1,4 +1,7 @@
+//materiale standard
 import 'package:flutter/material.dart';
+//import per usare route
+import 'package:project_mobile/route/route.dart' as route;
 
 
 //creo il widget NavBar menù laterale
@@ -81,14 +84,14 @@ class NavBar extends StatelessWidget{
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('Impostazioni'),
-            onTap: () => null,
+            onTap: () => Navigator.pushNamed(context, route.settingsPage),
           ),
           Divider(),
           //LOGOUT
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('Logout'),
-            onTap: () => null,
+            onTap: () => Navigator.pushNamed(context, route.loginPage),
           ),
           //fine lista
         ],

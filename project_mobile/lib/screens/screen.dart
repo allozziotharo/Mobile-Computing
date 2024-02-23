@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-
+//in questo file c'è una nuova pagina senza senso ci si possono fare prove o cancellare il file
 
 class nuovaPagina extends StatelessWidget {
   const nuovaPagina({super.key});

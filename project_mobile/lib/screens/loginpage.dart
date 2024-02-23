@@ -1,8 +1,12 @@
+//materiale standard
 import 'package:flutter/material.dart';
+//import per usare route
+import 'package:project_mobile/route/route.dart' as route;
+
 
 //schermata di Login bisogna finire la parte dei bottoni, e migliorarlo esteticamente
-class loginPage extends StatelessWidget {
-  const loginPage ({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage ({super.key});
 
   @override
   Widget build(BuildContext context){
@@ -75,6 +79,10 @@ class loginPage extends StatelessWidget {
           loginSection,
           //devo aggiungere i bottoni 
           Text ('bla bla bla bla'),
+          ElevatedButton(
+            child: Text('home', style: TextStyle(color: Colors.white),),
+            onPressed: () => Navigator.pushNamed(context, route.homePage),
+          ),
         ],
       ),
     );
