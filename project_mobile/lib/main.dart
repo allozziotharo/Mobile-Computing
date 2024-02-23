@@ -3,6 +3,7 @@ import 'constants/costantiGUI.dart';
 import 'constants/Fonts.dart';
 import 'hierarchy/Section.dart';//duplicato ma ntoccamo niente per ora
 import 'package:project_mobile/hierarchy/Section.dart';
+import 'package:project_mobile/screens/screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      //home: HomeScreen(),
+      home: HomePage(),
     );
   }
 }
@@ -61,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showAddSectionDialog() async {
+  void _showAddSectionDialog(BuildContext context) async {
     String newSectionTitle = '';
 
     Section? nuovaSezione = await showDialog(
@@ -84,7 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
             TextButton(
               onPressed: () {
                 if (newSectionTitle.isNotEmpty) {
-                  Navigator.of(context).pop(Section(titolo: newSectionTitle));
+                  Section nuovaSezione = Section(titolo: newSectionTitle);
+                  nuovaSezione.aggiungiSezione(context, newSectionTitle);
+                  Navigator.of(context).pop(nuovaSezione);
                 }
               },
               child: Text('OK'),

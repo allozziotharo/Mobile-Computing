@@ -23,7 +23,7 @@ class Section implements PoolFunzionalita {
 
     
     @override
-    Future<Section?> aggiungiSezione(String titolo) async {
+    Future<Section?> aggiungiSezione(BuildContext context, String titolo) async {
     /*
 La sintassi Future<Section?> indica che il metodo aggiungiSezione restituirà un oggetto Future di tipo Section?.
 Vediamo cosa significa ciascuna parte:
