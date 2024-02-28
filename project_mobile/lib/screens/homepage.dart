@@ -54,7 +54,7 @@ class NavBar extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.date_range),
             title: Text('Calendario'),
-            onTap: () => null,
+            onTap: () => Navigator.pushNamed(context, route.calendarPage),
           ),
           //NOTIFICHE
           ListTile(

@@ -1,46 +1,9 @@
 //materiale standard
 import 'package:flutter/material.dart';
-//import per usare route
-import 'package:project_mobile/route/route.dart' as route;
 
-Widget appTitle = Container(
-  margin: EdgeInsets.only(top: 50),
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: [
-      CircleAvatar(
-        radius: 30,
-        backgroundColor: Colors.cyan,
-        child: Icon(Icons.add_a_photo_rounded),
-      ),
-      Text('TITLE PROJ', style: TextStyle(color: Colors.black, fontSize: 30)),
-    ],
-  ),
-);
-
-Widget username_passTextfield = Column(
-  children: [
-    TextField(
-      style: TextStyle(color: Colors.deepPurple),
-      decoration: InputDecoration(
-          fillColor: Colors.grey.shade100,
-          filled: true,
-          hintText: 'Username',
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-    ),
-    SizedBox(height: 30),
-    TextField(
-      style: TextStyle(color: Colors.black),
-      obscureText: true,
-      decoration: InputDecoration(
-          fillColor: Colors.grey.shade100,
-          filled: true,
-          hintText: 'Password',
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-    ),
-    SizedBox(height: 30),
-  ],
-);
+import 'package:project_mobile/widget/TextFields.dart';
+import 'package:project_mobile/widget/CustomRow.dart';
+import 'package:project_mobile/widget/AppTitle.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -80,39 +43,8 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    username_passTextfield, // widget che contiene textfield username e password
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('sei nuovo?',
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14)),
-                            TextButton(
-                              onPressed: () => Navigator.pushNamed(
-                                  context, route.signupPage),
-                              child: Text('Sign In',
-                                  style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      color: Colors.black,
-                                      fontSize: 14)),
-                            ),
-                          ],
-                        ),
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.black,
-                          child: IconButton(
-                            color: Colors.white,
-                            onPressed: () =>
-                                Navigator.pushNamed(context, route.homePage),
-                            icon: Icon(Icons.arrow_forward),
-                          ),
-                        ),
-                      ],
-                    ),
+                    user_pass_tf, //WIDGET DICHIARATI IN textfields.dart e CustomRow.dart
+                    CustomRow(buttonText: 'Sign Up'),
                   ],
                 ),
               ),
