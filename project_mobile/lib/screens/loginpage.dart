@@ -3,89 +3,123 @@ import 'package:flutter/material.dart';
 //import per usare route
 import 'package:project_mobile/route/route.dart' as route;
 
+Widget appTitle = Container(
+  margin: EdgeInsets.only(top: 50),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: [
+      CircleAvatar(
+        radius: 30,
+        backgroundColor: Colors.cyan,
+        child: Icon(Icons.add_a_photo_rounded),
+      ),
+      Text('TITLE PROJ', style: TextStyle(color: Colors.black, fontSize: 30)),
+    ],
+  ),
+);
 
-//schermata di Login bisogna finire la parte dei bottoni, e migliorarlo esteticamente
-class LoginPage extends StatelessWidget {
-  const LoginPage ({super.key});
+Widget username_passTextfield = Column(
+  children: [
+    TextField(
+      style: TextStyle(color: Colors.deepPurple),
+      decoration: InputDecoration(
+          fillColor: Colors.grey.shade100,
+          filled: true,
+          hintText: 'Username',
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+    ),
+    SizedBox(height: 30),
+    TextField(
+      style: TextStyle(color: Colors.black),
+      obscureText: true,
+      decoration: InputDecoration(
+          fillColor: Colors.grey.shade100,
+          filled: true,
+          hintText: 'Password',
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+    ),
+    SizedBox(height: 30),
+  ],
+);
 
+class LoginPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context){
-    //qui posso definire dei layout più complessi che richiamerò in return scaffold
-    
-    //definisco il widget titleSection  (non è allineato con le caselle di testo e il text in fondo)
-    Widget titleSection = Container(
-      padding: EdgeInsets.all(32),
-      child: Row(
-        children: [
-          Icon(   //1° figlio sarà l'icona (primo el a sx)
-            Icons.star ,
-            color: Colors.red[500],
-          ),
-          const Text('AppTitle'), //poi ci sarà il titolo dell' app a dx
-        ],
-      ),
-    );
+  _LoginPageState createState() => _LoginPageState();
+}
 
-    //definisco il widget loginSection   (non si vede il bordo intorno ai textfield a meno che non ci clicchi sopra)
-    Widget loginSection = Container(
-      padding: EdgeInsets.all(32),
-      child: Column(
-        children: [   //questa colonna avrà due figli la casella di testo per l'email e per la password
-          SizedBox(
-          width: 150,
-          child: TextField(   //textfield per l'email 
-            decoration : InputDecoration(
-                  labelText : 'email',
-                  focusedBorder: OutlineInputBorder(  //focusedBordered mi permette di modificare l'estetica dei bordi mentre la casella è selezionata
-                    borderSide: BorderSide(
-                      color: Colors.grey, // Colore del bordo
-                      width: 3.0, // Spessore del bordo
-                    ),
-                  ),//per personalizzare qui i bordi mentre la casella non è selezionata dovrei aggiungere enabledBorder
+class _LoginPageState extends State<LoginPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/login_background.jpg'),
+              fit: BoxFit.cover)),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                appTitle, //widget che contiene icona e titolo dell'app definito sopra
+                Container(
+                  padding: EdgeInsets.only(left: 35, top: 90),
+                  child: const Text('Log In',
+                      style: TextStyle(color: Colors.black, fontSize: 24)),
                 ),
+              ],
             ),
-          ),
-          SizedBox(
-          width: 150,
-          child: TextField(  //textfield per la password
-            obscureText: true,  //in questo modo compaiono i puntini invece dei caratteri
-            decoration : InputDecoration(
-                  labelText : 'password',
-                  focusedBorder: OutlineInputBorder(  //focusedBordered mi permette di modificare l'estetica dei bordi mentre la casella è selezionata
-                    borderSide: BorderSide(
-                      color: Colors.grey, // Colore del bordo
-                      width: 3.0, // Spessore del bordo
-                    ),
-                  ),//per personalizzare qui i bordi mentre la casella non è selezionata dovrei aggiungere enabledBorder
+            SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.35,
+                  left: 30,
+                  right: 30,
                 ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    username_passTextfield, // widget che contiene textfield username e password
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('sei nuovo?',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 14)),
+                            TextButton(
+                              onPressed: () => Navigator.pushNamed(
+                                  context, route.signupPage),
+                              child: Text('Sign In',
+                                  style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      color: Colors.black,
+                                      fontSize: 14)),
+                            ),
+                          ],
+                        ),
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.black,
+                          child: IconButton(
+                            color: Colors.white,
+                            onPressed: () =>
+                                Navigator.pushNamed(context, route.homePage),
+                            icon: Icon(Icons.arrow_forward),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ],
-      ),
-    );
-
-    //definisco il widget per loginButton
-    //aspettiamo di usare playfab
-    
-    
-    //questo è il layout che verrà restituito
-    return Scaffold (
-      appBar: AppBar(
-        title: const Text ('login Screen'),
-      ),
-      body: Column(
-        children: [
-          titleSection,
-          loginSection,
-          //devo aggiungere i bottoni 
-          Text ('bla bla bla bla'),
-          ElevatedButton(
-            child: Text('home', style: TextStyle(color: Colors.white),),
-            onPressed: () => Navigator.pushNamed(context, route.homePage),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
-

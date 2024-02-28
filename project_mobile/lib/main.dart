@@ -1,11 +1,15 @@
+//import del materiale standard
 import 'package:flutter/material.dart';
+//
 import 'constants/costantiGUI.dart';
 import 'constants/Fonts.dart';
-import 'hierarchy/Section.dart';//duplicato ma ntoccamo niente per ora
+import 'hierarchy/Section.dart'; //duplicato ma ntoccamo niente per ora
 import 'package:project_mobile/hierarchy/Section.dart';
+//import delle varie pagine
 import 'package:project_mobile/screens/homepage.dart';
 import 'package:project_mobile/screens/loginpage.dart';
 import 'package:project_mobile/screens/settingspage.dart';
+//import del controller per la navigazione
 import 'package:project_mobile/route/route.dart' as route;
 
 void main() {
@@ -18,8 +22,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       //home: HomeScreen(),
       //home: HomePage(),
-      onGenerateRoute: route.controller,
-      initialRoute: route.loginPage,
+      onGenerateRoute: route.controller, //crea il controller nel file route
+      initialRoute:
+          route.signupPage, //la prima pagina visualizzaa è quella di login
     );
   }
 }
@@ -42,8 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
           maxLines: 3,
           textAlign: TextAlign.center,
           style: TextStyle(fontStyle: FontStyle.italic),
-          ),
-        centerTitle: true,        
+        ),
+        centerTitle: true,
         backgroundColor: Color(costantiGUI.primaryColor),
       ),
       body: ListView(
@@ -111,7 +116,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showSectionContextMenu(Section section) {
-
     showDialog(
       context: context,
       builder: (context) {
@@ -125,7 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: Icon(Icons.edit),
                 title: Text('Rinomina Sezione'),
                 onTap: () {
-                  Navigator.of(context).pop(); // Chiudi la finestra di dialogo corrente
+                  Navigator.of(context)
+                      .pop(); // Chiudi la finestra di dialogo corrente
                   _showRenameSectionDialog(section);
                 },
               ),
@@ -133,7 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: Icon(Icons.delete),
                 title: Text('Elimina Sezione'),
                 onTap: () {
-                  Navigator.of(context).pop(); // Chiudi la finestra di dialogo corrente
+                  Navigator.of(context)
+                      .pop(); // Chiudi la finestra di dialogo corrente
                   _showDeleteSectionDialog(section);
                 },
               ),
@@ -187,7 +193,8 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Eliminare permanentemente la sezione e tutte le informazioni al suo interno?'),
+          title: Text(
+              'Eliminare permanentemente la sezione e tutte le informazioni al suo interno?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -216,7 +223,8 @@ class SectionWidget extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onLongPress;
 
-  SectionWidget({required this.section, required this.onTap, required this.onLongPress});
+  SectionWidget(
+      {required this.section, required this.onTap, required this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
@@ -226,10 +234,11 @@ class SectionWidget extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(16.0),
         margin: EdgeInsets.all(8.0),
-        decoration: BoxDecoration (
+        decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12.0), //RAGGIO DEL BORDO
-          border: Border.all(color: Color(costantiGUI.secondaryColor), width: 2.0), //CONTORNO
+          border: Border.all(
+              color: Color(costantiGUI.secondaryColor), width: 2.0), //CONTORNO
         ),
         child: Text(
           section.titolo,
@@ -237,7 +246,7 @@ class SectionWidget extends StatelessWidget {
             fontSize: 20.0,
             color: Colors.black, //COLORE TITOLO SEZIONI
             fontFamily: 'RussoOne',
-            ), 
+          ),
           textAlign: TextAlign.center, //TITOLO SEZIONI CENTRATO
         ),
       ),
