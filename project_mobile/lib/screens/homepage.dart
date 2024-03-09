@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 //import per usare route
 import 'package:project_mobile/route/route.dart' as route;
+import 'package:project_mobile/widget/ToolList.dart';
 
 //import che mi serve per provare ToolContainer.dart
 import 'package:project_mobile/widget/ToolContainer.dart';
@@ -121,6 +122,10 @@ class HomePage extends StatefulWidget {
 }
 
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
@@ -136,3 +141,24 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+//x fare le prove
+
+/*
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: NavBar(), //widget creato sopra -> menu laterale
+      appBar: AppBar(
+        title: const Text(
+            'HomePage'), //se metto text come child di center viene un po' sulla dx a causa dell'icona del menu
+      ),
+      body: Center(
+        child: listaTool,
+      )
+    );
+  }
+}
+*/

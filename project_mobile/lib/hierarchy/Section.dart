@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import 'package:project_mobile/hierarchy/toolpool/PoolFunzionalita.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -32,15 +33,58 @@ class Section implements PoolFunzionalita {
     /*
 La sintassi Future<Section?> indica che il metodo aggiungiSezione restituirà un oggetto Future di tipo Section?.
 Vediamo cosa significa ciascuna parte:
+=======
+import 'package:project_mobile/hierarchy/toolpool/Tool.dart';
 
-Future: Un Future rappresenta un valore o un errore che potrebbe non essere disponibile immediatamente.
-    È utilizzato per gestire operazioni asincrone, come la lettura di dati da un file o una chiamata di rete,
-    in cui il risultato potrebbe richiedere del tempo per essere ottenuto.
+class Section {
 
-<Section?>: Questa è la tipizzazione generica del Future.
-    Indica che il valore restituito dal Future sarà di tipo Section?.
-    Il punto interrogativo (?) dopo Section indica che il tipo può essere nullable, cioè il valore può essere null.
+  late String sectionTitle;
+  late DateTime dataCreazione;
+  late List<Tool> toolList;
+ 
+  //modelliamo le sezioni come un albero arbitrario,
+  //annidamento di figli/aggiunta di fratelli
+  late List<Section> childSections;
+  Section? parentSection; //nullable per evitare errori nella sezione radice (quelle di profondità 0)
+  
 
+  //COSTRUTTORE (PADRE+TITOLO)
+  Section(Section? parentSection, String newSectionTitle) {
+    this.parentSection = parentSection;
+    this.sectionTitle = newSectionTitle;
+    //creazione di una lista CHE PUO' CAMBIARE DIMENSIONE
+    this.toolList = new List.empty(growable: true);
+    this.childSections = new List.empty(growable: true);
+
+    //ORA SEMPRE INIZIALIZZATA
+    this.dataCreazione = DateTime.now();
+  }
+
+
+  //getters & setters
+  String getSectionTitle() => sectionTitle;
+  void setSectionTitle(String newSectionTitle) {this.sectionTitle = newSectionTitle;}
+
+  DateTime getData() => dataCreazione;
+
+  List<Tool> getToolList() => toolList;
+  List<Section> getChildSections() => childSections;
+
+  Section? getParentSection() => parentSection;
+
+
+  void addSection(String newSectionTitle) {
+    Section newSection = new Section(this.parentSection, newSectionTitle);
+    this.childSections.add(newSection);
+
+  }
+
+  
+>>>>>>> Stashed changes
+
+
+
+<<<<<<< Updated upstream
 Quindi, Future<Section?> indica un futuro risultato di tipo Section?, indicando che il risultato potrebbe essere un oggetto Section o null.
     */
     print("inizio aggiungiSezione");
@@ -298,4 +342,6 @@ class SectionWidget extends StatefulWidget {
       ),
     );
   }
+=======
+>>>>>>> Stashed changes
 }
