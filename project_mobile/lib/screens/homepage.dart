@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:project_mobile/route/route.dart' as route;
 import 'package:project_mobile/widget/ToolList.dart';
 
-//import che mi serve per provare ToolContainer.dart
-import 'package:project_mobile/widget/ToolContainer.dart';
 
 //creo il widget NavBar menù laterale
 class NavBar extends StatelessWidget {
@@ -122,10 +120,6 @@ class HomePage extends StatefulWidget {
 }
 
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {

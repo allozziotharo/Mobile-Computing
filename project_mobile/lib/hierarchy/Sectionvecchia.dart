@@ -1,32 +1,3 @@
-<<<<<<< Updated upstream
-import 'package:project_mobile/hierarchy/toolpool/PoolFunzionalita.dart';
-import 'package:flutter/material.dart';
-class Section implements PoolFunzionalita {
-
-    String titolo;
-    DateTime? data;    //IL PUNTO INTERROGATIVO SIGNIFICA CHE IL CAMPO PUO ANCHE ESSERE NULL
-    List <Section>? sezioniFiglie;
-    List <PoolFunzionalita>? toolImplementati;  //in Dart non ci sono wildcard: in Java avrei dovuto scrive <? extends PoolFunzionalita>
-
-
-    Section({required this.titolo, this.data}) : sezioniFiglie = [];
-
-    String get getTitolo => this.titolo;
-
-    List <Section>? getSezioniFiglie() {
-        return this.sezioniFiglie;
-    }
-
-    List <PoolFunzionalita>? getToolImplementati() {
-        return this.toolImplementati;
-    }
-
- 
-
-    
-    @override
-    Future<Section?> aggiungiSezione(BuildContext context, String titolo) async {
-=======
 import 'package:project_mobile/hierarchy/toolpool/Tool.dart';
 import 'package:flutter/material.dart';
 
@@ -52,7 +23,6 @@ class Section implements PoolFunzionalita {
 
   @override
   Future<Section?> aggiungiSezione(BuildContext context, String titolo) async {
->>>>>>> Stashed changes
     /*
 La sintassi Future<Section?> indica che il metodo aggiungiSezione restituirà un oggetto Future di tipo Section?.
 Vediamo cosa significa ciascuna parte:
