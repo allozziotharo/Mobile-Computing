@@ -43,39 +43,3 @@ class nuovaPagina extends StatelessWidget {
   }
 }
 
-class menuScreen extends StatefulWidget{
-  const menuScreen({super.key});
-
-  @override
-  State<menuScreen> createState() => _menuScreenState();
-}
-
-class _menuScreenState extends State<menuScreen>{
-
-
-  @override
-  Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('aggiungi caselle di testo'),
-      ),
-      body: Center(
-
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed:(){
-          //aggiungere la funzione che deve eseguire quando premuto il button
-          addTextField();
-        },
-        
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-
-
-  }
-
-  void addTextField(){
-
-  }
-}
