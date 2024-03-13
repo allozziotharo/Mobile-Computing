@@ -15,11 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          textTheme:
-              GoogleFonts.lobsterTwoTextTheme(Theme.of(context).textTheme)),
+          textTheme: GoogleFonts.oxaniumTextTheme(Theme.of(context).textTheme)),
       onGenerateRoute: route.controller, //crea il controller nel file route
       initialRoute:
-          route.signupPage, //la prima pagina visualizzaa è quella di login
+          route.listPage, //la prima pagina visualizzaa è quella di login
     );
   }
 }
