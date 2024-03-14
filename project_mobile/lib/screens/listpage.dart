@@ -1,82 +1,6 @@
 //materiale standard
 import 'package:flutter/material.dart';
-//import per usare route
-//import 'package:project_mobile/route/route.dart' as route;
-
-class ListItem {
-  //classe del singolo elemento della lista
-  final String esame; //attributi dell'oggetto
-  final int voto;
-
-  //costruttore (non possono essere assenti i parametri)
-  const ListItem({required this.esame, required this.voto});
-}
-
-//la lista che contiene gli elementi
-final List<ListItem> listItems = [
-  ListItem(esame: 'ASD', voto: 30),
-  ListItem(esame: 'FDA', voto: 29),
-  ListItem(esame: 'POO', voto: 28),
-  ListItem(esame: 'RO', voto: 27),
-];
-
-//questa classe costruisce il widget che viene visualizzato
-class ListItemWidget extends StatelessWidget {
-  final ListItem item;
-  final Animation<double> animation;
-  final VoidCallback? onClicked;
-
-  const ListItemWidget(
-      {required this.item,
-      required this.onClicked,
-      required this.animation,
-      Key? key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => SizeTransition(
-        sizeFactor: animation,
-        child: BuildItem(),
-      );
-
-  Widget BuildItem() => Container(
-        margin: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.lime,
-        ),
-        child: ListTile(
-          contentPadding: EdgeInsets.all(16),
-          leading: CircleAvatar(
-            radius: 32,
-            backgroundColor: Colors.deepOrange,
-            child: Text.rich(
-              TextSpan(
-                text: item.voto.toString(),
-                style: TextStyle(
-                  fontSize: 30,
-                ),
-              ),
-            ),
-          ),
-          title: Text(
-            item.esame,
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.black,
-            ),
-          ),
-          trailing: IconButton(
-            icon: Icon(
-              Icons.delete,
-              color: const Color.fromARGB(255, 54, 86, 244),
-              size: 32,
-            ),
-            onPressed: onClicked,
-          ),
-        ),
-      );
-}
+import 'package:project_mobile/widget/ListItem.dart';
 
 class ListPage extends StatefulWidget {
   @override
@@ -84,15 +8,18 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+  //per far vedere cosa è stato selezionato nel datepicker
+  TextEditingController _dateController = TextEditingController();
+
   final listKey = GlobalKey<AnimatedListState>();
-  //tipo della lista          //da dove li prende
-  final List<ListItem> items = List.from(listItems);
+  //tipo della lista
+  final List<ListItem> items = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('prova lista'),
+        title: const Text('CAREER'),
         centerTitle: true,
       ),
       body: AnimatedList(
@@ -109,10 +36,11 @@ class _ListPageState extends State<ListPage> {
         onPressed: () =>
             readData(), //qui va aggiunto il metodo che lancia la procedura di aggiunta del nuovo el
       ),
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.white,
     );
   }
 
+  //funzione che rimuove un list item invocata dal cestino
   void removeItem(int index) {
     final removedItem = items[index];
     items.removeAt(index);
@@ -127,14 +55,16 @@ class _ListPageState extends State<ListPage> {
     );
   }
 
+  //funzione che si occupa dell'interazione con l'utente invocata tramite il floating action button
   void readData() {
-    String esame = '';
+    String data = "";
+    String esame = "";
     int voto = 0;
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('inserisci esame e voto'),
+            title: const Text('insert exam data'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -143,7 +73,7 @@ class _ListPageState extends State<ListPage> {
                     esame = value;
                   },
                   decoration: InputDecoration(
-                    hintText: 'inserisci nome esame',
+                    hintText: 'insert exam name',
                   ),
                 ),
                 TextField(
@@ -152,22 +82,48 @@ class _ListPageState extends State<ListPage> {
                     voto = int.parse(value);
                   },
                   decoration: InputDecoration(
-                    hintText: 'inserisci voto esame',
+                    hintText: 'insert exam degree',
                   ),
                 ),
+                TextField(
+                  controller: _dateController,
+                  decoration: const InputDecoration(
+                    labelText: 'DATE',
+                    filled: true,
+                    prefixIcon: const Icon(Icons.calendar_today),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
+                  ),
+                  readOnly: true,
+                  onTap: () async {
+                    final DateTime? picked = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2025));
+                    if (picked != null) {
+                      setState(() {
+                        _dateController.text = picked.toString().split(" ")[0];
+                        data = picked.toString().split(" ")[0];
+                      });
+                    }
+                  },
+                )
               ],
             ),
             actions: [
               TextButton(
-                child: Text('Annulla'),
+                child: Text('CANCEL'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               TextButton(
-                child: Text('Procedi'),
+                child: Text('PROCEED'),
                 onPressed: () {
-                  insertItem(esame, voto);
+                  insertItem(esame, voto, data);
+                  _dateController.text = '';
                   Navigator.of(context).pop();
                 },
               ),
@@ -176,9 +132,10 @@ class _ListPageState extends State<ListPage> {
         });
   }
 
-  void insertItem(String esame, int voto) {
+  //funzione che chiama il costruttore di list item e lo inserisce nella lista
+  void insertItem(String esame, int voto, String data) {
     final newIndex = 0;
-    final newItem = ListItem(esame: esame, voto: voto);
+    final newItem = ListItem(esame: esame, voto: voto, data: data);
     items.insert(newIndex, newItem);
     listKey.currentState!
         .insertItem(newIndex, duration: Duration(milliseconds: 500));
