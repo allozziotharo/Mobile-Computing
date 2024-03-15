@@ -8,6 +8,7 @@ import 'package:project_mobile/screens/settingspage.dart';
 import 'package:project_mobile/screens/signup.dart';
 import 'package:project_mobile/screens/calendar.dart';
 import 'package:project_mobile/screens/listpage.dart';
+import 'package:project_mobile/screens/authpage.dart';
 
 //nomi da dare alle pagine in cui andare attraverso delle stringhe costanti
 const String loginPage = 'login';
@@ -16,6 +17,7 @@ const String settingsPage = 'settings';
 const String signupPage = 'signup';
 const String calendarPage = 'calendar';
 const String listPage = 'list';
+const String authPage = 'auth';
 
 //il controller che gestirà il passaggio da una pagina ad un'altra
 Route<dynamic> controller(RouteSettings settings) {
@@ -32,6 +34,8 @@ Route<dynamic> controller(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => Calendar());
     case listPage:
       return MaterialPageRoute(builder: (context) => ListPage());
+    case authPage:
+      return MaterialPageRoute(builder: (context) => AuthPage());
     default:
       throw ('This route name does not exist');
   }
