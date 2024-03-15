@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyC5O3i52CIoOFV8dgd6xMQw6BDg17eNT24</string>
+	<key>GCM_SENDER_ID</key>
+	<string>788849191684</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.projectMobile</string>
+	<key>PROJECT_ID</key>
+	<string>mobile-lippucci-germano</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mobile-lippucci-germano.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:788849191684:ios:285eb8d0437c9e7fef3e51</string>
+</dict>
+</plist>

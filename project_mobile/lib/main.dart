@@ -5,7 +5,16 @@ import 'package:google_fonts/google_fonts.dart';
 //import del controller per la navigazione
 import 'package:project_mobile/route/route.dart' as route;
 
-void main() {
+
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
