@@ -82,7 +82,7 @@ Future<void> createUser() async {
                           ),
                           
                           ElevatedButton(onPressed: (){
-                            isLogin ? signIn() : createUser() //a seconda del valore di isLogin (variabile d'istanza), o fai l'uno : l'altro
+                            isLogin ? signIn() : createUser(); //a seconda del valore di isLogin (variabile d'istanza), o fai l'uno : l'altro
                           },
                               child: Text(isLogin ? 'Accedi' : 'Registrati')),
                           
@@ -90,8 +90,8 @@ Future<void> createUser() async {
                             setState(() {
                               isLogin = !isLogin;
                             });
-                          }, child: Text(isLogin? 'Non hai un account? Registrati' : 'Hai un account? Accedi'))      
-                        ],   //riprendi da 16.58 del video
+                          }, child: Text(isLogin? 'Non hai un account? Registrati!' : 'Hai un account? Accedi!'))      
+                        ],   
                       ),
                     ),
                   ],

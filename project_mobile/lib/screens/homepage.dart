@@ -4,6 +4,9 @@ import 'package:project_mobile/widget/NavBar.dart';
 //import per usare route
 import 'package:project_mobile/route/route.dart' as route;
 
+//import per autenticazione, SERVE A RICHIAMARE 'Auth()'
+import 'package:project_mobile/services/auth.dart';
+
 //screen che contiene un menu laterale a scomparsa
 class HomePage extends StatefulWidget {
   //costruttore privato
@@ -22,6 +25,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  Future<void> signOut() async{
+    await Auth().signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +37,11 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text(
             'HomePage'), //se metto text come child di center viene un po' sulla dx a causa dell'icona del menu
+        actions: [
+          IconButton(onPressed: (){
+            signOut();
+          }, icon: Icon(Icons.logout))
+        ]
       ),
       body: Center(
         child: Column(
