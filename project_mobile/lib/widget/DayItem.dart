@@ -2,21 +2,47 @@
 import 'package:flutter/material.dart';
 //import per usare route
 
+/*widget che va nella row di weekpage*/
+class DayItemWidget extends StatelessWidget {
+  final String day; //giorno da visualizzare
+  //costruttore
+  const DayItemWidget({required this.day});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      width: 150,
+      height: 40,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8), color: Colors.blueGrey[600]),
+      child: Center(
+        child: Text(day, style: TextStyle(fontSize: 30, color: Colors.white)),
+      ),
+    );
+  }
+}
+
+//questa classe contiene i dati per il widget della lista di lezioni di weekpage
 class ClassItem {
   //nome del giorno
   final String subject;
+  final String notes;
   final TimeOfDay start;
   final TimeOfDay end;
 
   //costruttore
   const ClassItem(
-      {required this.subject, required this.start, required this.end});
+      {required this.subject,
+      required this.notes,
+      required this.start,
+      required this.end});
 }
 
 //classe del singolo widget che viene visualizzato nella lista
 class ClassItemWidget extends StatelessWidget {
   //attributi del widget visualizzato
-  final ClassItem item; //riferimento al giorno
+  final ClassItem item; //riferimento alla lezione
   final Animation<double> animation; //animazione
   final VoidCallback? onClicked; //funzione che serve all'icona cestino
 
@@ -41,10 +67,10 @@ class ClassItemWidget extends StatelessWidget {
   Widget BuildItem(BuildContext context) => Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors
-              .amber, //eventualmente implementare un modo per far scegliere all'utente il colore
-        ),
+            borderRadius: BorderRadius.circular(12),
+            color: Colors
+                .amber //eventualmente implementare un modo per far scegliere all'utente il colore
+            ),
         child: ListTile(
           contentPadding: EdgeInsets.all(16),
           leading: Column(
@@ -60,7 +86,9 @@ class ClassItemWidget extends StatelessWidget {
                   style: TextStyle(fontSize: 14)),
             ],
           ),
-          //title: -> qui ci va la parte per inserire delle note
+          title: Center(
+            child: Text("${item.notes}", style: TextStyle(fontSize: 16)),
+          ),
           trailing: IconButton(
             icon: Icon(
               Icons.delete,

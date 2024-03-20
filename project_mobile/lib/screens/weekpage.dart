@@ -1,33 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_mobile/widget/DayItem.dart';
 
-class DayItemWidget extends StatelessWidget {
-  final String day;
-  //una lista di eventi ?
-
-  const DayItemWidget({required this.day});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(8),
-      width: 100,
-      height: 40,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: Colors.blueGrey[600]),
-      child: Center(
-        child: Text(
-          day,
-          style: TextStyle(
-            fontSize: 30,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class WeekPage extends StatefulWidget {
   @override
   _WeekPageState createState() => _WeekPageState();
@@ -38,25 +11,36 @@ class _WeekPageState extends State<WeekPage> {
   TextEditingController _timeControllerStart = TextEditingController();
   TextEditingController _timeControllerEnd = TextEditingController();
   /******************************************************/
-
-  //serve per accedere agli elementi dell' AnimatedList
-  Map<String, GlobalKey<AnimatedListState>> _dayKey = {
-    "lunedì": GlobalKey<AnimatedListState>(),
-    "martedì": GlobalKey<AnimatedListState>(),
-    "mercoledì": GlobalKey<AnimatedListState>(),
-    "giovedì": GlobalKey<AnimatedListState>(),
-    "venerdì": GlobalKey<AnimatedListState>(),
-  };
-
   //stringa che stampa il giorno corrente
   String _daySelected = "";
+
+  //lista che contiene i giorni della settimana
+  final List<String> _days = [
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday"
+  ];
+  /*****************************************/
+
+  //serve per accedere agli elementi dell' AnimatedList
+  late Map<String, GlobalKey<AnimatedListState>> _dayKey = {
+    _days[0]: GlobalKey<AnimatedListState>(),
+    _days[1]: GlobalKey<AnimatedListState>(),
+    _days[2]: GlobalKey<AnimatedListState>(),
+    _days[3]: GlobalKey<AnimatedListState>(),
+    _days[4]: GlobalKey<AnimatedListState>(),
+  };
+  /****************************************************/
+
   //mappa <giorno, lista_del_giorno>
-  Map<String, List<ClassItem>> dayToList = {
-    "lunedì": [],
-    "martedì": [],
-    "mercoledì": [],
-    "giovedì": [],
-    "venerdì": [],
+  late Map<String, List<ClassItem>> dayToList = {
+    _days[0]: [],
+    _days[1]: [],
+    _days[2]: [],
+    _days[3]: [],
+    _days[4]: [],
   };
   /***********************************/
 
@@ -69,58 +53,30 @@ class _WeekPageState extends State<WeekPage> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(children: [
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _daySelected = "lunedì";
-                            });
-                          },
-                          child: DayItemWidget(day: "lun")),
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _daySelected = "martedì";
-                            });
-                          },
-                          child: DayItemWidget(day: "mar")),
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _daySelected = "mercoledì";
-                            });
-                          },
-                          child: DayItemWidget(day: "mer")),
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _daySelected = "giovedì";
-                            });
-                          },
-                          child: DayItemWidget(day: "gio")),
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _daySelected = "venerdì";
-                            });
-                          },
-                          child: DayItemWidget(day: "ven")),
-                    ])),
-                SizedBox(height: 20),
-                Text(
-                  "day selected: " + _daySelected,
-                  style: TextStyle(fontSize: 24, color: Colors.black),
-                ),
-                SizedBox(height: 30),
-              ],
-            ),
-          ),
+              padding: const EdgeInsets.only(top: 15),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                            children: List.generate(
+                          //creato una lista con le stringhe dei giorni della settimana
+                          5, //anzizhè ripetere il codice 5 volte uso List.generate(...) e lo scrivo una volta sola
+                          (index) => GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _daySelected = _days[index];
+                              });
+                            },
+                            child: DayItemWidget(day: _days[index]),
+                          ),
+                        ))),
+                    SizedBox(height: 20),
+                    Text("day selected: " + _daySelected,
+                        style: TextStyle(fontSize: 24, color: Colors.black)),
+                    SizedBox(height: 30),
+                  ])),
           if (_daySelected.isNotEmpty) // Check if a day is selected
             Expanded(
               child: AnimatedList(
@@ -136,7 +92,7 @@ class _WeekPageState extends State<WeekPage> {
             )
           else
             Center(
-              child: Text(
+              child: const Text(
                 "select a day to see events",
                 style: TextStyle(fontSize: 20),
               ),
@@ -174,6 +130,7 @@ class _WeekPageState extends State<WeekPage> {
   }
 
   void readData() {
+    String notes = "";
     String subject = "";
     TimeOfDay start = TimeOfDay(hour: 0, minute: 0);
     TimeOfDay end = TimeOfDay(hour: 0, minute: 0);
@@ -192,6 +149,14 @@ class _WeekPageState extends State<WeekPage> {
                   },
                   decoration: InputDecoration(
                     hintText: 'insert subject name',
+                  ),
+                ),
+                TextField(
+                  onChanged: (value) {
+                    notes = value;
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'insert some annotation',
                   ),
                 ),
                 TextField(
@@ -242,15 +207,15 @@ class _WeekPageState extends State<WeekPage> {
             ),
             actions: [
               TextButton(
-                child: Text('CANCEL'),
+                child: const Text('CANCEL'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               TextButton(
-                child: Text('PROCEED'),
+                child: const Text('PROCEED'),
                 onPressed: () {
-                  insertItem(subject, start, end);
+                  insertItem(subject, notes, start, end);
                   _timeControllerStart.text = '';
                   _timeControllerEnd.text = '';
                   Navigator.of(context).pop();
@@ -262,9 +227,11 @@ class _WeekPageState extends State<WeekPage> {
   }
 
   //funzione che chiama il costruttore di list item e lo inserisce nella lista
-  void insertItem(String subject, TimeOfDay start, TimeOfDay end) {
+  void insertItem(
+      String subject, String notes, TimeOfDay start, TimeOfDay end) {
     final newIndex = 0;
-    final newItem = ClassItem(subject: subject, start: start, end: end);
+    final newItem =
+        ClassItem(subject: subject, notes: notes, start: start, end: end);
     dayToList[_daySelected]!.insert(newIndex, newItem);
     _dayKey[_daySelected]
         ?.currentState!
