@@ -8,7 +8,7 @@ import 'package:project_mobile/route/route.dart' as route;
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 
 //le metto tutte sticazzi cosi non abbiamo problemi
 import 'package:project_mobile/screens/homepage.dart';
@@ -20,6 +20,7 @@ import 'package:project_mobile/screens/listpage.dart';
 import 'package:project_mobile/screens/authpage.dart';
 
 import 'package:project_mobile/services/auth.dart';
+import 'package:recaptcha_v2_checkbox/recaptcha_v2_checkbox.dart';
 
 
 
