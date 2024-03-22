@@ -20,7 +20,8 @@ import 'package:project_mobile/screens/listpage.dart';
 import 'package:project_mobile/screens/authpage.dart';
 
 import 'package:project_mobile/services/auth.dart';
-import 'package:recaptcha_v2_checkbox/recaptcha_v2_checkbox.dart';
+//import 'package:recaptcha_v2_checkbox/recaptcha_v2_checkbox.dart';
+
 
 
 

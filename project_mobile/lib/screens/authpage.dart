@@ -67,7 +67,7 @@ Future<void> createUser() async {
                             decoration: InputDecoration(
                                 fillColor: Colors.grey.shade100,
                                 filled: true,
-                                hintText: 'Username',
+                                hintText: 'E-mail',
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
                           ),
                           TextField(
