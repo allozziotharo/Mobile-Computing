@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_mobile/widget/DayItem.dart';
+import 'package:project_mobile/widget/NavBar.dart';
 
 class WeekPage extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _WeekPageState extends State<WeekPage> {
   /******************************************************/
   //stringa che stampa il giorno corrente
   String _daySelected = "";
+  /*************************************/
 
   //lista che contiene i giorni della settimana
   final List<String> _days = [
@@ -24,7 +26,7 @@ class _WeekPageState extends State<WeekPage> {
   ];
   /*****************************************/
 
-  //serve per accedere agli elementi dell' AnimatedList
+  //serve per identificare le animatedList di ogni giorno
   late Map<String, GlobalKey<AnimatedListState>> _dayKey = {
     _days[0]: GlobalKey<AnimatedListState>(),
     _days[1]: GlobalKey<AnimatedListState>(),
@@ -47,6 +49,7 @@ class _WeekPageState extends State<WeekPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
         title: const Text("your week"),
       ),
@@ -215,10 +218,34 @@ class _WeekPageState extends State<WeekPage> {
               TextButton(
                 child: const Text('PROCEED'),
                 onPressed: () {
-                  insertItem(subject, notes, start, end);
-                  _timeControllerStart.text = '';
-                  _timeControllerEnd.text = '';
-                  Navigator.of(context).pop();
+                  if (end.hour < start.hour ||
+                      (end.hour == start.hour && end.minute <= start.minute)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Container(
+                            height: 90,
+                            decoration: BoxDecoration(
+                              //se l'ora non è giusta appare un messaggio ma è bruttissimo rifarlo più bello
+                              color: Colors.red,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                            ),
+                            child: Center(
+                                child: Text(
+                              'END TIME MUST BE AFTER THE START TIME',
+                              style: TextStyle(fontSize: 18),
+                            ))),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        elevation: 20,
+                      ),
+                    );
+                  } else {
+                    insertItem(subject, notes, start, end);
+                    _timeControllerStart.text = '';
+                    _timeControllerEnd.text = '';
+                    Navigator.of(context).pop();
+                  }
                 },
               ),
             ],
@@ -229,10 +256,11 @@ class _WeekPageState extends State<WeekPage> {
   //funzione che chiama il costruttore di list item e lo inserisce nella lista
   void insertItem(
       String subject, String notes, TimeOfDay start, TimeOfDay end) {
-    final newIndex = 0;
-    final newItem =
+    final newIndex = 0; //posizione in cui inserire nella lista
+    final newItem = //elemento da inserire nella lista
         ClassItem(subject: subject, notes: notes, start: start, end: end);
     dayToList[_daySelected]!.insert(newIndex, newItem);
+    //ordinare la lista in base all'ora di inizio di un evento
     _dayKey[_daySelected]
         ?.currentState!
         .insertItem(newIndex, duration: Duration(milliseconds: 500));
