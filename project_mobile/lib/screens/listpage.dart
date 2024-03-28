@@ -1,5 +1,6 @@
 //materiale standard
 import 'package:flutter/material.dart';
+import 'package:project_mobile/widget/AverageWidget.dart';
 import 'package:project_mobile/widget/ListItem.dart';
 import 'package:project_mobile/widget/degreeGraph/graph.dart';
 
@@ -15,11 +16,14 @@ class _ListPageState extends State<ListPage> {
   //chiave della animated list
   final listKey = GlobalKey<AnimatedListState>();
 
-  //tipo della lista
+  //elementi della animated list
   final List<ListItem> items = [];
 
   //lista che deve contenere i voti degli esami
   List<double> degree = [];
+
+  //variabile che dovrà contenere
+  double currentAverage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -32,25 +36,10 @@ class _ListPageState extends State<ListPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           //WIDGET PER MEDIA E CFU
-          Container(
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.blueGrey,
-                    width: 4,
-                  ),
-                  borderRadius: BorderRadius.circular(12)),
-              margin: EdgeInsets.all(20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text("CFU: 0"),
-                  Divider(),
-                  Text("MEDIA: 0.00"),
-                ],
-              )),
+          AverageWidget(average: currentAverage),
           //grafico
           SizedBox(
-            height: 300,
+            height: 250,
             child: MyGraph(
               degreeList: degree,
             ),
@@ -82,6 +71,7 @@ class _ListPageState extends State<ListPage> {
   //funzione che rimuove un list item invocata dal cestino
   void removeItem(int index) {
     final removedItem = items[index];
+    degree.removeAt(index); //rimuovo gli elementi dalle liste
     items.removeAt(index);
     listKey.currentState!.removeItem(
       index,
@@ -90,8 +80,9 @@ class _ListPageState extends State<ListPage> {
         animation: animation,
         onClicked: () {},
       ),
-      duration: Duration(milliseconds: 400),
+      duration: Duration(milliseconds: 250),
     );
+    setState(() {}); //questo setState serve a fare il refresh della pagina
   }
   /********************************************/
 
@@ -156,6 +147,7 @@ class _ListPageState extends State<ListPage> {
               TextButton(
                 child: const Text('CANCEL'),
                 onPressed: () {
+                  _dateController.text = '';
                   Navigator.of(context).pop();
                 },
               ),
@@ -164,6 +156,7 @@ class _ListPageState extends State<ListPage> {
                 onPressed: () {
                   insertItem(esame, voto, data);
                   _dateController.text = '';
+                  setState(() {});
                   Navigator.of(context).pop();
                 },
               ),
@@ -175,12 +168,10 @@ class _ListPageState extends State<ListPage> {
 
   //funzione che chiama il costruttore di list item e lo inserisce nella lista
   void insertItem(String esame, int voto, String data) {
-    final newIndex = 0;
     final newItem = ListItem(esame: esame, voto: voto, data: data);
+    items.insert(0, newItem);
     degree.add(double.parse(newItem.voto.toString()));
-    items.insert(newIndex, newItem);
-    listKey.currentState!
-        .insertItem(newIndex, duration: Duration(milliseconds: 500));
+    listKey.currentState!.insertItem(0, duration: Duration(milliseconds: 250));
   }
   /*****************************************************/
 }
