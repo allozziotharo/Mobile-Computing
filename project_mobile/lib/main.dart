@@ -37,7 +37,7 @@ void main() async {
 
 
 class MyApp extends StatefulWidget {
-  MyApp({super.key});
+  MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -73,6 +73,7 @@ class _MyAppState extends State<MyApp> {
 }
 */  //fatta usando il routing de andrea
 
+/*
 class _MyAppState extends State<MyApp> {
 
 @override
@@ -89,8 +90,7 @@ Widget build(BuildContext context) {
                 theme: ThemeData(
                     textTheme: GoogleFonts.oxaniumTextTheme(Theme.of(context).textTheme)),
                 onGenerateRoute: route.controller, //crea il controller nel file route
-                initialRoute:
-                    route.listPage, //la prima pagina visualizzaa è quella di login
+                initialRoute: route.listPage, //la prima pagina visualizzata è quella di login
             );
           }
           else {
@@ -99,8 +99,7 @@ Widget build(BuildContext context) {
                 theme: ThemeData(
                     textTheme: GoogleFonts.oxaniumTextTheme(Theme.of(context).textTheme)),
                 onGenerateRoute: route.controller, //crea il controller nel file route
-                initialRoute:
-                    route.authPage,
+                initialRoute: route.authPage,
             );
           }
         }
@@ -108,6 +107,7 @@ Widget build(BuildContext context) {
     );
   }
 }
+*/
 /*
 class MyApp extends StatelessWidget {
   @override
@@ -122,3 +122,25 @@ class MyApp extends StatelessWidget {
     );
   }
 }*/  //instradamento andrea
+
+class _MyAppState extends State<MyApp> {
+
+@override
+Widget build(BuildContext context) {
+  return MaterialApp(
+      theme: ThemeData(
+          textTheme: GoogleFonts.oxaniumTextTheme(Theme.of(context).textTheme)),
+      home: StreamBuilder(
+        stream: Auth().authStateChanges,
+        builder: (context, snapshot) {
+          if(snapshot.hasData) {
+            return HomePage();
+          }
+          else {
+            return AuthPage();
+          }
+        }
+      )
+    );
+  }
+}

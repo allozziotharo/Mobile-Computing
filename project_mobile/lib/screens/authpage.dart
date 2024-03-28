@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project_mobile/screens/listpage.dart';
 
 import 'package:project_mobile/widget/TextFields.dart';
 import 'package:project_mobile/widget/CustomRow.dart';
 
 import 'package:project_mobile/services/auth.dart';
+
+import 'package:project_mobile/route/route.dart' as route;
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -18,6 +21,7 @@ class _AuthPageState extends State<AuthPage> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   bool isLogin = false;
+ 
 
 Future<void> signIn() async {
   try {
@@ -81,7 +85,7 @@ Future<void> createUser() async {
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
                           ),
                           
-                          ElevatedButton(onPressed: (){
+                          ElevatedButton(onPressed: () {
                             isLogin ? signIn() : createUser(); //a seconda del valore di isLogin (variabile d'istanza), o fai l'uno : l'altro
                           },
                               child: Text(isLogin ? 'Accedi' : 'Registrati')),
@@ -103,4 +107,7 @@ Future<void> createUser() async {
       ),
     );
   }
+
+
+
 }
