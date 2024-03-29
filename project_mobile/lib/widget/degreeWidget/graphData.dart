@@ -1,4 +1,4 @@
-import 'package:project_mobile/widget/degreeGraph/singleBar.dart';
+import 'package:project_mobile/widget/degreeWidget/singleBar.dart';
 
 //classe che contiene i dati del grafico
 class GraphData {

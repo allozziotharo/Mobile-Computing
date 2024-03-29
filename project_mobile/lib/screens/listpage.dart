@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_mobile/widget/AverageWidget.dart';
 import 'package:project_mobile/widget/ListItem.dart';
-import 'package:project_mobile/widget/degreeGraph/graph.dart';
+import 'package:project_mobile/widget/degreeWidget/graph.dart';
 
 class ListPage extends StatefulWidget {
   @override
@@ -36,7 +36,7 @@ class _ListPageState extends State<ListPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           //WIDGET PER MEDIA E CFU
-          AverageWidget(average: currentAverage),
+          AverageWidget(average: currentAverage / degree.length),
           //grafico
           SizedBox(
             height: 250,
@@ -169,8 +169,10 @@ class _ListPageState extends State<ListPage> {
   //funzione che chiama il costruttore di list item e lo inserisce nella lista
   void insertItem(String esame, int voto, String data) {
     final newItem = ListItem(esame: esame, voto: voto, data: data);
-    items.insert(0, newItem);
-    degree.add(double.parse(newItem.voto.toString()));
+    currentAverage += voto; //aggiornamento della media
+    items.insert(0, newItem); //inserisco tra gli elemnti dell'animated list
+    degree.add(
+        double.parse(newItem.voto.toString())); //inserisco negli el del grafico
     listKey.currentState!.insertItem(0, duration: Duration(milliseconds: 250));
   }
   /*****************************************************/

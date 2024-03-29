@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:project_mobile/widget/degreeGraph/graphData.dart';
+import 'package:project_mobile/widget/degreeWidget/graphData.dart';
 
 //questa è la classe che costruisce il grafico
 class MyGraph extends StatelessWidget {
@@ -19,6 +19,7 @@ class MyGraph extends StatelessWidget {
     //ciò che viene visualizzato
     return BarChart(
       BarChartData(
+          alignment: BarChartAlignment.start,
           maxY: 30,
           minY: 0,
           gridData: FlGridData(show: false),

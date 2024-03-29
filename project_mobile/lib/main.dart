@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.oxaniumTextTheme(Theme.of(context).textTheme)),
       onGenerateRoute: route.controller, //crea il controller nel file route
       initialRoute:
-          route.listPage, //la prima pagina visualizzaa è quella di login
+          route.homePage, //la prima pagina visualizzaa è quella di login
     );
   }
 }
