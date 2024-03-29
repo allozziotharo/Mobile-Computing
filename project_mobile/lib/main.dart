@@ -128,6 +128,8 @@ class _MyAppState extends State<MyApp> {
 @override
 Widget build(BuildContext context) {
   return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: route.controller,
       theme: ThemeData(
           textTheme: GoogleFonts.oxaniumTextTheme(Theme.of(context).textTheme)),
       home: StreamBuilder(

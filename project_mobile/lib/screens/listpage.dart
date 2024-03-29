@@ -1,6 +1,8 @@
 //materiale standard
 import 'package:flutter/material.dart';
+import 'package:project_mobile/widget/AverageWidget.dart';
 import 'package:project_mobile/widget/ListItem.dart';
+import 'package:project_mobile/widget/degreeWidget/graph.dart';
 
 class ListPage extends StatefulWidget {
   @override
@@ -11,9 +13,17 @@ class _ListPageState extends State<ListPage> {
   //per far vedere cosa è stato selezionato nel datepicker
   TextEditingController _dateController = TextEditingController();
 
+  //chiave della animated list
   final listKey = GlobalKey<AnimatedListState>();
-  //tipo della lista
+
+  //elementi della animated list
   final List<ListItem> items = [];
+
+  //lista che deve contenere i voti degli esami
+  List<double> degree = [];
+
+  //variabile che dovrà contenere
+  double currentAverage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +32,31 @@ class _ListPageState extends State<ListPage> {
         title: const Text('CAREER'),
         centerTitle: true,
       ),
-      body: AnimatedList(
-        key: listKey,
-        initialItemCount: items.length,
-        itemBuilder: (context, index, animation) => ListItemWidget(
-          item: items[index],
-          animation: animation,
-          onClicked: () => removeItem(index),
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          //WIDGET PER MEDIA E CFU
+          AverageWidget(average: currentAverage / degree.length),
+          //grafico
+          SizedBox(
+            height: 250,
+            child: MyGraph(
+              degreeList: degree,
+            ),
+          ),
+          //la lista va sotto
+          Expanded(
+            child: AnimatedList(
+              key: listKey,
+              initialItemCount: items.length,
+              itemBuilder: (context, index, animation) => ListItemWidget(
+                item: items[index],
+                animation: animation,
+                onClicked: () => removeItem(index),
+              ),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -39,10 +66,12 @@ class _ListPageState extends State<ListPage> {
       backgroundColor: Colors.white,
     );
   }
+  /************************************/
 
   //funzione che rimuove un list item invocata dal cestino
   void removeItem(int index) {
     final removedItem = items[index];
+    degree.removeAt(index); //rimuovo gli elementi dalle liste
     items.removeAt(index);
     listKey.currentState!.removeItem(
       index,
@@ -51,9 +80,11 @@ class _ListPageState extends State<ListPage> {
         animation: animation,
         onClicked: () {},
       ),
-      duration: Duration(milliseconds: 400),
+      duration: Duration(milliseconds: 250),
     );
+    setState(() {}); //questo setState serve a fare il refresh della pagina
   }
+  /********************************************/
 
   //funzione che si occupa dell'interazione con l'utente invocata tramite il floating action button
   void readData() {
@@ -100,7 +131,7 @@ class _ListPageState extends State<ListPage> {
                     final DateTime? picked = await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
-                        firstDate: DateTime(2000),
+                        firstDate: DateTime(2020),
                         lastDate: DateTime(2025));
                     if (picked != null) {
                       setState(() {
@@ -114,16 +145,18 @@ class _ListPageState extends State<ListPage> {
             ),
             actions: [
               TextButton(
-                child: Text('CANCEL'),
+                child: const Text('CANCEL'),
                 onPressed: () {
+                  _dateController.text = '';
                   Navigator.of(context).pop();
                 },
               ),
               TextButton(
-                child: Text('PROCEED'),
+                child: const Text('PROCEED'),
                 onPressed: () {
                   insertItem(esame, voto, data);
                   _dateController.text = '';
+                  setState(() {});
                   Navigator.of(context).pop();
                 },
               ),
@@ -131,13 +164,16 @@ class _ListPageState extends State<ListPage> {
           );
         });
   }
+  /***************************************************/
 
   //funzione che chiama il costruttore di list item e lo inserisce nella lista
   void insertItem(String esame, int voto, String data) {
-    final newIndex = 0;
     final newItem = ListItem(esame: esame, voto: voto, data: data);
-    items.insert(newIndex, newItem);
-    listKey.currentState!
-        .insertItem(newIndex, duration: Duration(milliseconds: 500));
+    currentAverage += voto; //aggiornamento della media
+    items.insert(0, newItem); //inserisco tra gli elemnti dell'animated list
+    degree.add(
+        double.parse(newItem.voto.toString())); //inserisco negli el del grafico
+    listKey.currentState!.insertItem(0, duration: Duration(milliseconds: 250));
   }
+  /*****************************************************/
 }

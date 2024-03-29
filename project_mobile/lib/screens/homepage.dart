@@ -1,6 +1,7 @@
 //materiale standard
 import 'package:flutter/material.dart';
 import 'package:project_mobile/widget/NavBar.dart';
+
 //import per usare route
 import 'package:project_mobile/route/route.dart' as route;
 
@@ -24,6 +25,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+/*
 class _HomePageState extends State<HomePage> {
 
   Future<void> signOut() async{
@@ -64,6 +66,79 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+*/ // METODO COUNTER DE PRIMA
+
+
+class _HomePageState extends State<HomePage> {
+
+  Future<void> signOut() async{
+    await Auth().signOut();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: NavBar(), //widget creato sopra -> menu laterale
+      appBar: AppBar(
+        title: const Text(
+            'HomePage'), //se metto text come child di center viene un po' sulla dx a causa dell'icona del menu
+        actions: [
+          IconButton(onPressed: (){
+            signOut();
+          }, icon: Icon(Icons.logout))
+        ]
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(5),
+        children: [
+
+          //DIVISORE
+          Divider(),
+
+          //TO-DO LIST
+          
+          ListTile(
+            leading: Icon(Icons.checklist_rounded),
+            title: const Text("TO-DO LIST"),
+            onTap: (){
+              Navigator.pushNamed(context, route.toDoListPage);
+            } //TODO: implementare cambio pagina
+          ),
+          
+
+          //SETTIMANA CORRENTE
+          ListTile(
+            leading: Icon(Icons.table_rows_rounded),
+            title: const Text("Settimana Corrente"),
+            onTap: (){
+              Navigator.pushNamed(context, route.weekPage);
+            }  
+          ),
+
+          //LIBRETTO
+          ListTile(
+            leading: Icon(Icons.menu_book_rounded),
+            title: const Text('Libretto'),
+            onTap: () => Navigator.pushNamed(context, route.listPage),
+          ),
+          
+
+          /*
+          //STATISTICHE
+          ListTile(
+            leading: Icon(Icons.bar_chart_rounded),
+            title: const Text("Statistiche"),
+            onTap: (){
+              Navigator.pushNamed(context, route.weekPage);
+            }
+          ),
+          */
+
+        ]
       ),
     );
   }
