@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_mobile/widget/DayItem.dart';
 import 'package:project_mobile/widget/NavBar.dart';
+import 'package:project_mobile/widget/flashMessages/errorMessage.dart';
 
 class WeekPage extends StatefulWidget {
   @override
@@ -220,26 +221,17 @@ class _WeekPageState extends State<WeekPage> {
                 onPressed: () {
                   if (end.hour < start.hour ||
                       (end.hour == start.hour && end.minute <= start.minute)) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Container(
-                            height: 90,
-                            decoration: BoxDecoration(
-                              //se l'ora non è giusta appare un messaggio ma è bruttissimo rifarlo più bello
-                              color: Colors.red,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                            ),
-                            child: Center(
-                                child: Text(
-                              'END TIME MUST BE AFTER THE START TIME',
-                              style: TextStyle(fontSize: 18),
-                            ))),
-                        behavior: SnackBarBehavior.floating,
-                        backgroundColor: Colors.transparent,
-                        elevation: 20,
-                      ),
-                    );
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: ErrorMessageContent(
+                          errorText:
+                              "ending time must be after the starting one"),
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                    ));
+                    _timeControllerStart.text = '';
+                    _timeControllerEnd.text = '';
+                    Navigator.of(context).pop();
                   } else {
                     insertItem(subject, notes, start, end);
                     _timeControllerStart.text = '';
