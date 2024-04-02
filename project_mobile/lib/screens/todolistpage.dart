@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 
 //CLASSE DELLA SINGOLA VOCE DELLA TO-DO LIST
 class Task{
-  bool isDone;
+  bool? isDone;
   String task;
   int? priority;
 
@@ -34,17 +34,20 @@ final List<Task> tasks = [];
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('COSE DA FARE'),
+        title: const Text('ACTUAL TASKS'),
         centerTitle: true,
       ),
       body: AnimatedList(
         key: listKey,
         initialItemCount: tasks.length,
-        itemBuilder: (context, index, animation) => ToDoListWidget(
-          task: tasks[index],
-          animation: animation,
-          onClicked: () => removeTask(index),
-        ),
+        itemBuilder: (context, index, animation) {
+          Task task = tasks[index];
+          return _ToDoListWidget(
+            task: task,
+            animation: animation,
+            onClicked: () => removeTask(index),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -64,7 +67,7 @@ final List<Task> tasks = [];
     tasks.removeAt(index);
     listKey.currentState!.removeItem(
       index,
-      (context, animation) => ToDoListWidget(
+      (context, animation) => _ToDoListWidget(
         task: removedTask,
         animation: animation,
         onClicked: () {},
@@ -101,7 +104,7 @@ final List<Task> tasks = [];
                   else priority = int.parse(value);   
                 },
                 decoration: InputDecoration(
-                  hintText: 'insert priority from 1 to 5 (otherwise it will be 0)' //
+                  hintText: 'insert priority from 1 to 5 (otherwise it will be 0)', //TODO: non c'entra e va fittato
                 ),
               ),
             ],
@@ -128,21 +131,30 @@ final List<Task> tasks = [];
   }
 }
 
-class ToDoListWidget extends StatelessWidget {
+class _ToDoListWidget extends StatefulWidget {
+  @override
+  _ToDoListWidgetState createState() => _ToDoListWidgetState();
+
+  
   final Task task;
   final Animation<double> animation;
   final VoidCallback? onClicked;
 
-  const ToDoListWidget(
+   _ToDoListWidget(
       {required this.task,
       required this.animation,
-      required this.onClicked,
-      Key? key})
-      : super(key: key);
+      this.onClicked,
+      Key? key});
+
+}
+
+class _ToDoListWidgetState extends State<_ToDoListWidget> {
+
   
+
   @override
   Widget build(BuildContext context) => SizeTransition(
-    sizeFactor: animation,
+    sizeFactor: widget.animation,
     child: BuildItem(),
   );
 
@@ -150,35 +162,51 @@ class ToDoListWidget extends StatelessWidget {
       margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        //color: Colors.deepPurple, TODO mappatura priorità
+        color: () {
+        switch(widget.task.priority) {
+            case 0:
+              return Colors.transparent;
+            case 1: 
+              return Color.fromARGB(66, 76, 175, 79);
+            case 2:
+              return Colors.green;
+            case 3:
+              return Color.fromARGB(255, 217, 255, 0);
+            case 4:
+              return Colors.orange;
+            case 5:
+              return const Color.fromARGB(255, 146, 38, 31);
+            default:
+              return Colors.transparent;
+          }
+        }(),
       ),
       child: ListTile(
         contentPadding: EdgeInsets.all(16),
-        /*leading: CircleAvatar( //TODO CHECKBOX
-          radius: 32,
-          backgroundColor: Colors.white,
-          child: Text.rich(
-            TextSpan(
-              text: task.voto.toString(),
-              style: TextStyle(fontSize: 30, color: Colors.black),
+        leading: Checkbox( 
+          value: widget.task.isDone,
+          onChanged: (newVal) {
+            setState(() {
+              widget.task.isDone = newVal;
+            });
+          },
+        ),
+             title: 
+          Text(
+            widget.task.task,
+            style: TextStyle(
+              fontSize: 28,
+              color: Color.fromARGB(255, 6, 5, 5),
+              decoration: widget.task.isDone == true? TextDecoration.lineThrough : null,
             ),
           ),
-        ),*/
-        title: 
-            Text(
-              task.task,
-              style: TextStyle(
-                fontSize: 28,
-                color: Color.fromARGB(255, 6, 5, 5),
-              ),
-            ),
         trailing: IconButton(
           icon: Icon(
             Icons.delete,
             color: Colors.red,
             size: 32,
           ),
-          onPressed: onClicked,
+          onPressed: widget.onClicked,
         ),
       ),
     );

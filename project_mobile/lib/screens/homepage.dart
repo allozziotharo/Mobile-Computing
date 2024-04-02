@@ -106,9 +106,11 @@ class _HomePageState extends State<HomePage> {
             title: const Text("TO-DO LIST"),
             onTap: (){
               Navigator.pushNamed(context, route.toDoListPage);
-            } //TODO: implementare cambio pagina
+            }
           ),
-          
+
+          //DIVISORE
+          Divider(),          
 
           //SETTIMANA CORRENTE
           ListTile(
@@ -118,6 +120,9 @@ class _HomePageState extends State<HomePage> {
               Navigator.pushNamed(context, route.weekPage);
             }  
           ),
+          
+          //DIVISORE
+          Divider(),
 
           //LIBRETTO
           ListTile(
@@ -125,7 +130,9 @@ class _HomePageState extends State<HomePage> {
             title: const Text('Libretto'),
             onTap: () => Navigator.pushNamed(context, route.listPage),
           ),
-          
+                    
+          //DIVISORE
+          Divider(),
 
           /*
           //STATISTICHE
