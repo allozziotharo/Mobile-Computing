@@ -36,13 +36,14 @@ class Task{
   IN UN OGGETTO JSON
   CODIFICATO DA STRINGHE
   */
-  String toJson() {
-    return jsonEncode({
+  Map<String, dynamic> toJson() {
+    return {
       'isDone': isDone,
       'task': task,
       'priority': priority,
-    });
+    };
   }
+
 
 }
 
