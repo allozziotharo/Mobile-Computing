@@ -16,9 +16,9 @@ class CustomRow extends StatelessWidget {
         TextButton(
           onPressed: () {
             if (buttonText == 'Log In') {
-              Navigator.pushNamed(context, route.loginPage);
+              Navigator.pushNamed(context, route.authPage);
             } else if (buttonText == 'Sign Up') {
-              Navigator.pushNamed(context, route.signupPage);
+              Navigator.pushNamed(context, route.authPage);
             }
           },
           child: Text(buttonText,

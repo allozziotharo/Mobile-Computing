@@ -10,18 +10,18 @@ import 'package:project_mobile/screens/calendar.dart';
 import 'package:project_mobile/screens/listpage.dart';
 import 'package:project_mobile/screens/authpage.dart';
 import 'package:project_mobile/screens/weekpage.dart';
-import 'package:project_mobile/screens/todolistpage.dart';
+import 'package:project_mobile/screens/todovideo/todolistpage.dart';
 
 //nomi da dare alle pagine in cui andare attraverso delle stringhe costanti
-const String loginPage = 'login';
 const String homePage = 'home';
 const String settingsPage = 'settings';
-const String signupPage = 'signup';
 const String calendarPage = 'calendar';
 const String listPage = 'list';
 const String authPage = 'auth';
 const String weekPage = 'week';
 const String toDoListPage = 'todolist';
+//const String signupPage = 'signup';
+//const String loginPage = 'login';
 
 //il controller che gestirà il passaggio da una pagina ad un'altra
 Route<dynamic> controller(RouteSettings settings) {
