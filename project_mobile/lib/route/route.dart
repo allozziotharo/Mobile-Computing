@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 //faccio l'import delle pagine in cui voglio navigare
+//import 'package:project_mobile/screens/loginpage.dart';
+//import 'package:project_mobile/screens/signup.dart';
 import 'package:project_mobile/screens/homepage.dart';
-import 'package:project_mobile/screens/loginpage.dart';
 import 'package:project_mobile/screens/settingspage.dart';
-import 'package:project_mobile/screens/signup.dart';
 import 'package:project_mobile/screens/calendar.dart';
 import 'package:project_mobile/screens/listpage.dart';
 import 'package:project_mobile/screens/authpage.dart';

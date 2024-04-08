@@ -2,25 +2,34 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:project_mobile/screens/todovideo/task.dart';
 ///---------------------------------------------------------------
 
 class ToDoListPage extends StatefulWidget {
+
+  ToDoListPage._();
+  static ToDoListPage _instance = ToDoListPage._();
+  factory ToDoListPage() {
+    return _instance;
+  }
+  List<Task> list = [];
+  late SharedPreferences sharedPreferences;
+  final listKey = GlobalKey<AnimatedListState>();
+
   @override
   _ToDoListPageState createState() => _ToDoListPageState();
+
+
 }
 
 ///----------------------------------------------------------------
 
 class _ToDoListPageState extends State<ToDoListPage> {
 
-  List<Task> list = List<Task>();
-  SharedPreferences sharedPreferences;
+ /* List<Task> list = [];
+  late SharedPreferences sharedPreferences;
   final listKey = GlobalKey<AnimatedListState>();
+*/
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +40,14 @@ class _ToDoListPageState extends State<ToDoListPage> {
         centerTitle: true,
       ),
       body: AnimatedList(
-        key: listKey,
-        initialItemCount: list.length,
+        key: widget.listKey,
+        initialItemCount: widget.list.length,
         itemBuilder: (context, index, animation) {
-          Task task = list[index];
+          Task task = widget.list[index];
           return _ToDoListWidget(
             task: task,
             animation: animation,
-            onClicked: () => removeTask(index),
+            onClicked: () => toggleTaskCompleteness(index), // Pass the callback here
           );
         },
       ),
@@ -52,22 +61,27 @@ class _ToDoListPageState extends State<ToDoListPage> {
 
   @override
   void initState() {
-    initSharedPreferences();
     super.initState();
+    initSharedPreferences();
+  }
+/*
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadData(); // Call loadData again to ensure data is refreshed.
+  }*/
+
+  void initSharedPreferences() async {
+    widget.sharedPreferences = await SharedPreferences.getInstance();
+    loadData();
   }
 
-
-  initSharedPreferences() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-
-  }
-
-  void setCompleteness(Task item) {
-    setState((){
-      item.complete = !item.complete;
-    });
-    saveData();
-  }
+  void toggleTaskCompleteness(int index) {
+  setState(() {
+    widget.list[index].complete = !widget.list[index].complete;
+  });
+  saveData(); // Save the updated list
+}
 /*
   void addTask(Task item) {
     list.add(item);
@@ -77,12 +91,12 @@ class _ToDoListPageState extends State<ToDoListPage> {
   void insertTask(String title, int? priority) {
     final newTask = Task(title: title, priority: priority);
     // Add the new task to the end of the list
-    list.add(newTask);
+    widget.list.add(newTask);
     // Notify the AnimatedList of the insertion at the correct index
-    listKey.currentState!.insertItem(0, duration: Duration(milliseconds: 250));
+    widget.listKey.currentState!.insertItem(0, duration: Duration(milliseconds: 250));
     // Persist the updated list of tasks
     saveData();
-    print('Saved ${list.length} tasks to shared preferences');
+    print('Saved ${widget.list.length} tasks to shared preferences');
   }
 
   /*
@@ -100,9 +114,9 @@ class _ToDoListPageState extends State<ToDoListPage> {
   }
   */
   void removeTask(int index) {
-    final removedTask = list[index];
-    list.removeAt(index);
-    listKey.currentState!.removeItem(
+    final removedTask = widget.list[index];
+    widget.list.removeAt(index);
+    widget.listKey.currentState!.removeItem(
       index,
           (context, animation) => _ToDoListWidget(
         task: removedTask,
@@ -111,7 +125,6 @@ class _ToDoListPageState extends State<ToDoListPage> {
       ),
       duration: Duration(milliseconds: 250),
     );
-
     saveData();
   }
 
@@ -167,40 +180,34 @@ class _ToDoListPageState extends State<ToDoListPage> {
         }
     );
   }
-}
 
-void saveData() {
-    List<String> spList = list.map((item) => json.encode(item.toMap())).toList();
-    sharedPreferences.setStringList('list', spList);
-  }
+  void saveData() {
+      List<String> spList = widget.list.map((item) => json.encode(item.toMap())).toList();
+      widget.sharedPreferences.setStringList('list', spList);
+    }
 
   void loadData() {
-    List<String> spList = sharedPreferences.getStringList('list');
-    list = spList.map((item) => Task.fromMap(json.decode(item))).toList();
+    List<String>? spList = widget.sharedPreferences.getStringList('list');
+    if (spList != null) widget.list = spList.map((item) => Task.fromMap(json.decode(item))).toList();
+    else widget.list = [];
     setState(() {});
   }
-
-
-
 }
 
-
-
 class _ToDoListWidget extends StatefulWidget {
-  @override
-  _ToDoListWidgetState createState() => _ToDoListWidgetState();
-
-
   final Task task;
   final Animation<double> animation;
-  final VoidCallback? onClicked;
+  final VoidCallback? onClicked; // Ensure this is nullable
 
-  _ToDoListWidget(
-      {required this.task,
-        required this.animation,
-        this.onClicked,
-        Key? key});
+  _ToDoListWidget({
+    required this.task,
+    required this.animation,
+    this.onClicked,
+    Key? key,
+  }) : super(key: key);
 
+  @override
+  _ToDoListWidgetState createState() => _ToDoListWidgetState();
 }
 
 class _ToDoListWidgetState extends State<_ToDoListWidget> {
@@ -230,7 +237,7 @@ class _ToDoListWidgetState extends State<_ToDoListWidget> {
           case 4:
             return Colors.orange;
           case 5:
-            return const Color.fromARGB(255, 146, 38, 31);
+            return Color.fromARGB(255, 213, 68, 58);
           default:
             return Colors.transparent;
         }
@@ -240,10 +247,10 @@ class _ToDoListWidgetState extends State<_ToDoListWidget> {
       contentPadding: EdgeInsets.all(16),
       leading: Checkbox(
         value: widget.task.complete,
-        onChanged: (newVal) {
-          setState(() {
-            widget.task.complete = newVal;
-          });
+        onChanged: (bool? newValue) {
+          if (newValue != null) {
+            widget.onClicked?.call(); // Call the passed callback function
+          }
         },
       ),
       title:
@@ -266,4 +273,6 @@ class _ToDoListWidgetState extends State<_ToDoListWidget> {
     ),
   );
 }
+
+
 
