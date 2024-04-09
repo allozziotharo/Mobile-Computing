@@ -18,8 +18,6 @@ class ToDoListPage extends StatefulWidget {
 
   @override
   _ToDoListPageState createState() => _ToDoListPageState();
-
-
 }
 
 ///----------------------------------------------------------------
@@ -33,7 +31,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
 
   @override
   Widget build(BuildContext context) {
-
+    setState((){}); 
     return Scaffold(
       appBar: AppBar(
         title: const Text('ACTUAL TASKS'),
@@ -47,7 +45,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
           return _ToDoListWidget(
             task: task,
             animation: animation,
-            onClicked: () => toggleTaskCompleteness(index), // Pass the callback here
+            onClicked: () => removeTask(index), // Pass the callback here
           );
         },
       ),
@@ -126,6 +124,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
       duration: Duration(milliseconds: 250),
     );
     saveData();
+
   }
 
 
@@ -249,7 +248,7 @@ class _ToDoListWidgetState extends State<_ToDoListWidget> {
         value: widget.task.complete,
         onChanged: (bool? newValue) {
           if (newValue != null) {
-            widget.onClicked?.call(); // Call the passed callback function
+            widget.task.complete = newValue; // Call the passed callback function
           }
         },
       ),
@@ -268,7 +267,9 @@ class _ToDoListWidgetState extends State<_ToDoListWidget> {
           color: Colors.red,
           size: 32,
         ),
-        onPressed: widget.onClicked,
+        onPressed: () {
+          widget.onClicked;
+        },
       ),
     ),
   );
