@@ -13,7 +13,7 @@ class ToDoListPage extends StatefulWidget {
     return _instance;
   }
   List<Task> list = [];
-  late SharedPreferences sharedPreferences;
+  SharedPreferences? sharedPreferences;
   final listKey = GlobalKey<AnimatedListState>();
 
   @override
@@ -31,7 +31,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
 
   @override
   Widget build(BuildContext context) {
-    setState((){}); 
+    //setState((){}); 
     return Scaffold(
       appBar: AppBar(
         title: const Text('ACTUAL TASKS'),
@@ -124,7 +124,6 @@ class _ToDoListPageState extends State<ToDoListPage> {
       duration: Duration(milliseconds: 250),
     );
     saveData();
-
   }
 
 
@@ -182,11 +181,11 @@ class _ToDoListPageState extends State<ToDoListPage> {
 
   void saveData() {
       List<String> spList = widget.list.map((item) => json.encode(item.toMap())).toList();
-      widget.sharedPreferences.setStringList('list', spList);
+      widget.sharedPreferences!.setStringList('list', spList);
     }
 
   void loadData() {
-    List<String>? spList = widget.sharedPreferences.getStringList('list');
+    List<String>? spList = widget.sharedPreferences!.getStringList('list');
     if (spList != null) widget.list = spList.map((item) => Task.fromMap(json.decode(item))).toList();
     else widget.list = [];
     setState(() {});
@@ -248,7 +247,9 @@ class _ToDoListWidgetState extends State<_ToDoListWidget> {
         value: widget.task.complete,
         onChanged: (bool? newValue) {
           if (newValue != null) {
-            widget.task.complete = newValue; // Call the passed callback function
+            setState((){
+              widget.task.complete = newValue; // Call the passed callback function})
+            });
           }
         },
       ),
@@ -267,9 +268,7 @@ class _ToDoListWidgetState extends State<_ToDoListWidget> {
           color: Colors.red,
           size: 32,
         ),
-        onPressed: () {
-          widget.onClicked;
-        },
+        onPressed: widget.onClicked,
       ),
     ),
   );

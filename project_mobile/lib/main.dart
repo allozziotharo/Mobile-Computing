@@ -18,6 +18,7 @@ import 'package:project_mobile/screens/signup.dart';
 import 'package:project_mobile/screens/calendar.dart';
 import 'package:project_mobile/screens/listpage.dart';
 import 'package:project_mobile/screens/authpage.dart';
+import 'package:project_mobile/screens/todovideo/todolistpage.dart';
 
 import 'package:project_mobile/services/auth.dart';
 //import 'package:recaptcha_v2_checkbox/recaptcha_v2_checkbox.dart';
@@ -136,6 +137,8 @@ Widget build(BuildContext context) {
         stream: Auth().authStateChanges,
         builder: (context, snapshot) {
           if(snapshot.hasData) {
+            ToDoListPage();
+     //       ToDoListPage().sharedPreferences.
             return HomePage();
           }
           else {
