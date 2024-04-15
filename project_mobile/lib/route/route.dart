@@ -9,6 +9,7 @@ import 'package:project_mobile/screens/signup.dart';
 import 'package:project_mobile/screens/calendar.dart';
 import 'package:project_mobile/screens/listpage.dart';
 import 'package:project_mobile/screens/weekpage.dart';
+//import 'package:project_mobile/screens/week_pref.dart';
 
 //nomi da dare alle pagine in cui andare attraverso delle stringhe costanti
 const String loginPage = 'login';

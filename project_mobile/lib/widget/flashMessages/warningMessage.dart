@@ -16,10 +16,10 @@ onPressed: () {
           }
 */
 
-class ErrorMessageContent extends StatelessWidget {
-  const ErrorMessageContent({required this.errorText, super.key});
+class WarningMessageContent extends StatelessWidget {
+  const WarningMessageContent({required this.warningText, super.key});
 
-  final String errorText;
+  final String warningText;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class ErrorMessageContent extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           height: 100,
           decoration: const BoxDecoration(
-              color: Colors.red,
+              color: Colors.yellow,
               borderRadius: const BorderRadius.all(Radius.circular(20))),
           child: Row(
             children: [
@@ -39,11 +39,11 @@ class ErrorMessageContent extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Oh No!",
+                    const Text("Attention!",
                         style: TextStyle(fontSize: 22, color: Colors.white)),
                     const Spacer(),
                     Text(
-                      errorText,
+                      warningText,
                       style: TextStyle(fontSize: 16, color: Colors.white),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -60,7 +60,7 @@ class ErrorMessageContent extends StatelessWidget {
             borderRadius:
                 const BorderRadius.only(bottomLeft: Radius.circular(20)),
             child: SvgPicture.asset(
-              "assets/icons/redbubbles.svg",
+              "assets/icons/yellowbubbles.svg",
               height: 48,
               width: 40,
             ),
@@ -73,13 +73,13 @@ class ErrorMessageContent extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               SvgPicture.asset(
-                "assets/icons/red.svg",
+                "assets/icons/yellow.svg",
                 height: 40,
               ),
               Positioned(
                 top: 10,
                 child: SvgPicture.asset(
-                  "assets/icons/cross.svg",
+                  "assets/icons/excl_mark.svg",
                   height: 16,
                 ),
               ),

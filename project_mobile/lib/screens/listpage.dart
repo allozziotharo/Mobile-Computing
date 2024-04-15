@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project_mobile/widget/AverageWidget.dart';
 import 'package:project_mobile/widget/ListItem.dart';
 import 'package:project_mobile/widget/degreeWidget/graph.dart';
+import 'package:project_mobile/widget/flashMessages/errorMessage.dart';
 
 class ListPage extends StatefulWidget {
   @override
@@ -154,10 +155,23 @@ class _ListPageState extends State<ListPage> {
               TextButton(
                 child: const Text('PROCEED'),
                 onPressed: () {
-                  insertItem(esame, voto, data);
-                  _dateController.text = '';
-                  setState(() {});
-                  Navigator.of(context).pop();
+                  if (voto > 30 || voto < 18) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: ErrorMessageContent(
+                          errorText:
+                              "degree must be a value between 18 and 30!"),
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                    ));
+                    _dateController.text = "";
+                    Navigator.of(context).pop();
+                  } else {
+                    insertItem(esame, voto, data);
+                    _dateController.text = '';
+                    setState(() {});
+                    Navigator.of(context).pop();
+                  }
                 },
               ),
             ],

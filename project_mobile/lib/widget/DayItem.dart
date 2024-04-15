@@ -12,7 +12,7 @@ class DayItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(8),
-      width: 150,
+      width: 160,
       height: 40,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8), color: Colors.blueGrey[600]),
@@ -26,17 +26,33 @@ class DayItemWidget extends StatelessWidget {
 //questa classe contiene i dati per il widget della lista di lezioni di weekpage
 class ClassItem {
   //nome del giorno
-  final String subject;
-  final String notes;
-  final TimeOfDay start;
-  final TimeOfDay end;
+  String subject;
+  String notes;
+  String start;
+  String end;
 
   //costruttore
-  const ClassItem(
+  ClassItem(
       {required this.subject,
       required this.notes,
       required this.start,
       required this.end});
+
+  ClassItem.fromMap(Map<String, dynamic> map) //costruttore json -> per encoding
+      : subject = map['subject'],
+        notes = map['notes'],
+        start = map['start'],
+        end = map['end'];
+
+  Map<String, dynamic> toMap() {
+    //restituisce i valori salvati con json
+    return {
+      'subject': subject,
+      'notes': notes,
+      'start': start,
+      'end': end,
+    };
+  }
 }
 
 //classe del singolo widget che viene visualizzato nella lista
@@ -80,10 +96,8 @@ class ClassItemWidget extends StatelessWidget {
                   style: TextStyle(
                       fontSize:
                           16)), //se qui aumento la size errore di overflow
-              Text("${item.start.format(context)}",
-                  style: TextStyle(fontSize: 14)),
-              Text("${item.end.format(context)}",
-                  style: TextStyle(fontSize: 14)),
+              Text("${item.start}", style: TextStyle(fontSize: 14)),
+              Text("${item.end}", style: TextStyle(fontSize: 14)),
             ],
           ),
           title: Center(

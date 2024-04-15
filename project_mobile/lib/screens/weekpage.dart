@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:project_mobile/screens/week_pref.dart';
 import 'package:project_mobile/widget/DayItem.dart';
 import 'package:project_mobile/widget/NavBar.dart';
+import 'package:project_mobile/widget/flashMessages/confirmMessage.dart';
+import 'package:project_mobile/widget/flashMessages/warningMessage.dart';
 import 'package:project_mobile/widget/flashMessages/errorMessage.dart';
 
 class WeekPage extends StatefulWidget {
@@ -16,9 +19,8 @@ class _WeekPageState extends State<WeekPage> {
   //stringa che stampa il giorno corrente
   String _daySelected = "";
   /*************************************/
-
   //lista che contiene i giorni della settimana
-  final List<String> _days = [
+  static const List<String> _days = [
     "monday",
     "tuesday",
     "wednesday",
@@ -26,7 +28,6 @@ class _WeekPageState extends State<WeekPage> {
     "friday"
   ];
   /*****************************************/
-
   //serve per identificare le animatedList di ogni giorno
   late Map<String, GlobalKey<AnimatedListState>> _dayKey = {
     _days[0]: GlobalKey<AnimatedListState>(),
@@ -36,7 +37,6 @@ class _WeekPageState extends State<WeekPage> {
     _days[4]: GlobalKey<AnimatedListState>(),
   };
   /****************************************************/
-
   //mappa <giorno, lista_del_giorno>
   late Map<String, List<ClassItem>> dayToList = {
     _days[0]: [],
@@ -46,14 +46,28 @@ class _WeekPageState extends State<WeekPage> {
     _days[4]: [],
   };
   /***********************************/
+  //dati lezione
+  String notes = ""; //di classItem
+  String subject = "";
+  TimeOfDay start = TimeOfDay(hour: 0, minute: 0);
+  TimeOfDay end = TimeOfDay(hour: 0, minute: 0);
+  /**************************************/
+
+  @override
+  void initState() {
+    super.initState();
+
+    //inizializzare le variabili di istanza
+    //... dayToList = WeekPref.getMap;
+    dayToList = WeekPreferences.getDay2List();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: NavBar(),
-      appBar: AppBar(
-        title: const Text("your week"),
-      ),
+      appBar: AppBar(title: const Text("your week")),
       body: Column(
         children: [
           Padding(
@@ -108,12 +122,198 @@ class _WeekPageState extends State<WeekPage> {
           Icons.add,
           color: Colors.white,
         ),
-        onPressed: () => readData(),
+        onPressed: () {
+          if (_daySelected == "") {
+            showWarningMessage(
+                "you must select a day first! BITCHASSNIGGHI", context);
+          } else {
+            readData();
+          }
+        },
+      ),
+    );
+  }
+  /**************** FINE BUILD ****************/
+
+  void readData() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('insert subject data'),
+            content: Column(mainAxisSize: MainAxisSize.min, children: [
+              buildTextField('subject'),
+              buildTextField('notes'),
+              TextField(
+                  controller: _timeControllerStart,
+                  decoration: InputDecoration(
+                      labelText: 'START',
+                      filled: true,
+                      prefixIcon: const Icon(Icons.access_time),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue))),
+                  readOnly: true,
+                  onTap: () async {
+                    final TimeOfDay? picked = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay(hour: 0, minute: 0));
+                    if (picked != null) {
+                      setState(() {
+                        _timeControllerStart.text = picked.format(context);
+                        start = picked;
+                      });
+                    }
+                  }),
+              TextField(
+                  controller: _timeControllerEnd,
+                  decoration: InputDecoration(
+                      labelText: 'END',
+                      filled: true,
+                      prefixIcon: const Icon(Icons.access_time),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue))),
+                  readOnly: true,
+                  onTap: () async {
+                    final TimeOfDay? picked = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay(hour: 0, minute: 0));
+                    if (picked != null) {
+                      setState(() {
+                        _timeControllerEnd.text = picked.format(context);
+                        end = picked;
+                      });
+                    }
+                  }),
+            ]),
+            actions: [
+              TextButton(
+                child: const Text('CANCEL'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                  child: const Text('PROCEED'),
+                  onPressed: () {
+                    if (isTimeIncorrect(end, start)) {
+                      showErrorMessage(
+                          "ending time must be after the starting one",
+                          context);
+                      _timeControllerStart.text = '';
+                      _timeControllerEnd.text = '';
+                      Navigator.of(context).pop();
+                    } else {
+                      insertItem(subject, notes, start, end);
+                      showConfirmMessage("class succesfully added!", context);
+                      _timeControllerStart.text = '';
+                      _timeControllerEnd.text = '';
+                      Navigator.of(context).pop();
+                    }
+                  }),
+            ],
+          );
+        });
+  }
+
+  /*FUNZIONI CHE RESTITUISCONO I MESSAGGI*/
+  void showWarningMessage(String warningText, BuildContext context) {
+    //messaggio di warning
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: WarningMessageContent(warningText: warningText),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    ));
+  }
+
+  void showErrorMessage(String errorText, BuildContext context) {
+    //messaggio di errore
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: ErrorMessageContent(errorText: errorText),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    ));
+  }
+
+  void showConfirmMessage(String confirmText, BuildContext context) {
+    //messaggio di conferma
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: ConfirmMessageContent(confirmText: confirmText),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    ));
+  }
+  /*************************************************/
+
+  bool isTimeIncorrect(TimeOfDay end, TimeOfDay start) {
+    return end.hour < start.hour ||
+        (end.hour == start.hour && end.minute <= start.minute);
+  }
+
+  Widget buildTextField(String hintText) {
+    return TextField(
+      onChanged: (value) {
+        if (hintText == 'subject') {
+          this.subject = value;
+        } else {
+          this.notes = value;
+        }
+      },
+      decoration: InputDecoration(
+        hintText: hintText,
       ),
     );
   }
 
-  //funzione che rimuove un list item invocata dal cestino
+  Widget buildTimeField(String labelText) {
+    //riuscire a trovare il modo per usarlo
+    return TextField(
+        controller: _timeControllerStart,
+        decoration: InputDecoration(
+            labelText: labelText,
+            filled: true,
+            prefixIcon: const Icon(Icons.access_time),
+            enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue))),
+        readOnly: true,
+        onTap: () async {
+          final TimeOfDay? picked = await showTimePicker(
+              context: context, initialTime: TimeOfDay(hour: 0, minute: 0));
+          if (picked != null) {
+            setState(() {
+              if (labelText == 'START') {
+                _timeControllerStart.text = picked.format(context);
+                start = picked;
+              } else {
+                _timeControllerEnd.text = picked.format(context);
+                end = picked;
+              }
+            });
+          }
+        });
+  }
+
+  /***FUNZIONI PER L'INSERIMENTO E CANCELLAZIONE DEGLI EL DALLA LISTA***/
+  void insertItem(
+      String subject, String notes, TimeOfDay start, TimeOfDay end) {
+    final newIndex = 0; //posizione in cui inserire nella lista
+    final newItem = //elemento da inserire nella lista
+        ClassItem(
+            subject: subject,
+            notes: notes,
+            start: start.format(context),
+            end: end.format(context));
+    dayToList[_daySelected]!.insert(newIndex, newItem);
+    //ordinare la lista in base all'ora di inizio di un evento
+    _dayKey[_daySelected]
+        ?.currentState!
+        .insertItem(newIndex, duration: Duration(milliseconds: 500));
+
+    Save();
+  }
+
   void removeItem(int index) {
     // Access the list for the selected day
     final list = dayToList[_daySelected];
@@ -130,131 +330,12 @@ class _WeekPageState extends State<WeekPage> {
             ),
             duration: Duration(milliseconds: 500),
           );
+      Save();
     }
   }
+  /********************************************************/
 
-  void readData() {
-    String notes = "";
-    String subject = "";
-    TimeOfDay start = TimeOfDay(hour: 0, minute: 0);
-    TimeOfDay end = TimeOfDay(hour: 0, minute: 0);
-
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('insert subject data'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  onChanged: (value) {
-                    subject = value;
-                  },
-                  decoration: InputDecoration(
-                    hintText: 'insert subject name',
-                  ),
-                ),
-                TextField(
-                  onChanged: (value) {
-                    notes = value;
-                  },
-                  decoration: InputDecoration(
-                    hintText: 'insert some annotation',
-                  ),
-                ),
-                TextField(
-                  controller: _timeControllerStart,
-                  decoration: const InputDecoration(
-                    labelText: "START",
-                    filled: true,
-                    prefixIcon: const Icon(Icons.access_time),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue),
-                    ),
-                  ),
-                  readOnly: true,
-                  onTap: () async {
-                    final TimeOfDay? picked = await showTimePicker(
-                        context: context, initialTime: start);
-                    if (picked != null) {
-                      setState(() {
-                        _timeControllerStart.text = picked.format(context);
-                        start = picked;
-                      });
-                    }
-                  },
-                ),
-                TextField(
-                  controller: _timeControllerEnd,
-                  decoration: const InputDecoration(
-                    labelText: "END",
-                    filled: true,
-                    prefixIcon: const Icon(Icons.access_time),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue),
-                    ),
-                  ),
-                  readOnly: true,
-                  onTap: () async {
-                    final TimeOfDay? picked = await showTimePicker(
-                        context: context, initialTime: end);
-                    if (picked != null) {
-                      setState(() {
-                        _timeControllerEnd.text = picked.format(context);
-                        end = picked;
-                      });
-                    }
-                  },
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                child: const Text('CANCEL'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: const Text('PROCEED'),
-                onPressed: () {
-                  if (end.hour < start.hour ||
-                      (end.hour == start.hour && end.minute <= start.minute)) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: ErrorMessageContent(
-                          errorText:
-                              "ending time must be after the starting one"),
-                      behavior: SnackBarBehavior.floating,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                    ));
-                    _timeControllerStart.text = '';
-                    _timeControllerEnd.text = '';
-                    Navigator.of(context).pop();
-                  } else {
-                    insertItem(subject, notes, start, end);
-                    _timeControllerStart.text = '';
-                    _timeControllerEnd.text = '';
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-            ],
-          );
-        });
-  }
-
-  //funzione che chiama il costruttore di list item e lo inserisce nella lista
-  void insertItem(
-      String subject, String notes, TimeOfDay start, TimeOfDay end) {
-    final newIndex = 0; //posizione in cui inserire nella lista
-    final newItem = //elemento da inserire nella lista
-        ClassItem(subject: subject, notes: notes, start: start, end: end);
-    dayToList[_daySelected]!.insert(newIndex, newItem);
-    //ordinare la lista in base all'ora di inizio di un evento
-    _dayKey[_daySelected]
-        ?.currentState!
-        .insertItem(newIndex, duration: Duration(milliseconds: 500));
+  void Save() async {
+    await WeekPreferences.setDay2List(dayToList);
   }
 }

@@ -30,15 +30,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  shared_preferences: ^2.0.8
-  table_calendar: ^3.1.0
-  google_fonts: ^6.1.0
-  flutter_svg: ^2.0.10+1
+  shared_preferences: ^2.2.2   #per la memorizzazione dei dati
+  table_calendar: ^3.1.0    #per il calendario
+  google_fonts: ^6.1.0    #per i font di google
+  flutter_svg: ^2.0.10+1    #per le icone dei flashmessages
+  json_serializable: ^6.7.1
+  intl: ^0.19.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  fl_chart: ^0.60.0
+  fl_chart: ^0.60.0   #grafico
+
 
 dev_dependencies:
   flutter_test:
