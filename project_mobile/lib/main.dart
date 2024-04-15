@@ -7,6 +7,7 @@ import 'package:project_mobile/route/route.dart' as route;
 
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:project_mobile/screens/todovideo/todolist_pref.dart';
 import 'firebase_options.dart';
 
 
@@ -31,6 +32,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await ToDoListPreferences.init();
   runApp(MyApp());
 }
 

@@ -1,21 +1,15 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:project_mobile/screens/todovideo/task.dart';
+import 'package:project_mobile/screens/todovideo/todolist_pref.dart';
 ///---------------------------------------------------------------
 
 class ToDoListPage extends StatefulWidget {
-
-  ToDoListPage._();
-  static ToDoListPage _instance = ToDoListPage._();
-  factory ToDoListPage() {
-    return _instance;
-  }
+/*
   List<Task> list = [];
   SharedPreferences? sharedPreferences;
   final listKey = GlobalKey<AnimatedListState>();
-
+*/
   @override
   _ToDoListPageState createState() => _ToDoListPageState();
 }
@@ -24,10 +18,10 @@ class ToDoListPage extends StatefulWidget {
 
 class _ToDoListPageState extends State<ToDoListPage> {
 
- /* List<Task> list = [];
+  List<Task> list = [];
   late SharedPreferences sharedPreferences;
   final listKey = GlobalKey<AnimatedListState>();
-*/
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +32,10 @@ class _ToDoListPageState extends State<ToDoListPage> {
         centerTitle: true,
       ),
       body: AnimatedList(
-        key: widget.listKey,
-        initialItemCount: widget.list.length,
+        key: listKey,
+        initialItemCount: list.length,
         itemBuilder: (context, index, animation) {
-          Task task = widget.list[index];
+          Task task = list[index];
           return _ToDoListWidget(
             task: task,
             animation: animation,
@@ -60,7 +54,8 @@ class _ToDoListPageState extends State<ToDoListPage> {
   @override
   void initState() {
     super.initState();
-    initSharedPreferences();
+    list = ToDoListPreferences.getToDoList();
+   // initSharedPreferences();
   }
 /*
   @override
@@ -69,16 +64,18 @@ class _ToDoListPageState extends State<ToDoListPage> {
     loadData(); // Call loadData again to ensure data is refreshed.
   }*/
 
+  /*
   void initSharedPreferences() async {
-    widget.sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences = await SharedPreferences.getInstance();
     loadData();
   }
+  */
 
   void toggleTaskCompleteness(int index) {
   setState(() {
-    widget.list[index].complete = !widget.list[index].complete;
+    list[index].complete = !list[index].complete;
   });
-  saveData(); // Save the updated list
+  ToDoListPreferences.setToDoList(list); // Save the updated list
 }
 /*
   void addTask(Task item) {
@@ -89,12 +86,12 @@ class _ToDoListPageState extends State<ToDoListPage> {
   void insertTask(String title, int? priority) {
     final newTask = Task(title: title, priority: priority);
     // Add the new task to the end of the list
-    widget.list.add(newTask);
+    list.add(newTask);
     // Notify the AnimatedList of the insertion at the correct index
-    widget.listKey.currentState!.insertItem(0, duration: Duration(milliseconds: 250));
+    listKey.currentState!.insertItem(0, duration: Duration(milliseconds: 250));
     // Persist the updated list of tasks
-    saveData();
-    print('Saved ${widget.list.length} tasks to shared preferences');
+    ToDoListPreferences.setToDoList(list);
+    print('Saved ${list.length} tasks to shared preferences');
   }
 
   /*
@@ -112,9 +109,9 @@ class _ToDoListPageState extends State<ToDoListPage> {
   }
   */
   void removeTask(int index) {
-    final removedTask = widget.list[index];
-    widget.list.removeAt(index);
-    widget.listKey.currentState!.removeItem(
+    final removedTask = list[index];
+    list.removeAt(index);
+    listKey.currentState!.removeItem(
       index,
           (context, animation) => _ToDoListWidget(
         task: removedTask,
@@ -123,7 +120,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
       ),
       duration: Duration(milliseconds: 250),
     );
-    saveData();
+    ToDoListPreferences.setToDoList(list);
   }
 
 
@@ -179,6 +176,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
     );
   }
 
+/*
   void saveData() {
       List<String> spList = widget.list.map((item) => json.encode(item.toMap())).toList();
       widget.sharedPreferences!.setStringList('list', spList);
@@ -190,6 +188,8 @@ class _ToDoListPageState extends State<ToDoListPage> {
     else widget.list = [];
     setState(() {});
   }
+  */
+
 }
 
 class _ToDoListWidget extends StatefulWidget {
