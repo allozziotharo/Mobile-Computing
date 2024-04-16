@@ -224,20 +224,18 @@ class _ToDoListWidgetState extends State<_ToDoListWidget> {
       borderRadius: BorderRadius.circular(12),
       color: () {
         switch(widget.task.priority) {
-          case 0:
-            return Colors.transparent;
           case 1:
-            return Color.fromARGB(66, 76, 175, 79);
+            return Color.fromARGB(66, 63, 147, 66);
           case 2:
-            return Colors.green;
+            return const Color.fromARGB(255, 38, 91, 39);
           case 3:
-            return Color.fromARGB(255, 217, 255, 0);
+            return Color.fromARGB(255, 195, 172, 0);
           case 4:
-            return Colors.orange;
+            return const Color.fromARGB(255, 206, 124, 0);
           case 5:
             return Color.fromARGB(255, 213, 68, 58);
           default:
-            return Colors.transparent;
+            return  Color.fromARGB(66, 63, 147, 66);
         }
       }(),
     ),
@@ -258,7 +256,7 @@ class _ToDoListWidgetState extends State<_ToDoListWidget> {
         widget.task.title,
         style: TextStyle(
           fontSize: 28,
-          color: Color.fromARGB(255, 6, 5, 5),
+          color: Colors.white,
           decoration: widget.task.complete == true? TextDecoration.lineThrough : null,
         ),
       ),

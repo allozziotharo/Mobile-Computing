@@ -70,6 +70,12 @@ flutter:
     - assets/prova.jpg
     - assets/sfondo_login.jpg
     - assets/login_background.jpg
+    - assets/fotoToDoList.jpg
+    - assets/fotoWeekPage.jpg
+    - assets/fotoWeekPage(2).jpg
+    - assets/fotoWeekPage(3).jpg
+    - assets/fotoLibretto.jpg
+    - assets/fotoStatsPage.jpg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

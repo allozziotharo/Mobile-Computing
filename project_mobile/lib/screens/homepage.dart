@@ -100,50 +100,160 @@ class _HomePageState extends State<HomePage> {
           Divider(),
 
           //TO-DO LIST
-          
-          ListTile(
-            leading: Icon(Icons.checklist_rounded),
-            title: const Text("TO-DO LIST"),
-            onTap: (){
-              Navigator.pushNamed(context, route.toDoListPage);
-            }
+          Container(
+            height: 150,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage('assets/fotoToDoList.jpg'),
+                colorFilter: ColorFilter.mode(
+                  Colors.white.withOpacity(0.4),
+                  BlendMode.srcOver
+                ),
+              ),
+            ),            
+            child:
+            ListTile(
+              
+              leading: Icon(Icons.checklist_rounded),
+              title: Text("TO-DO LIST",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 40,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                shadows: [
+                  Shadow(
+                    blurRadius: 3.0,
+                    color: Colors.black.withOpacity(0.9),
+                    offset: Offset(-2,7.5),
+                  ),
+                ],
+                ),
+              ),
+              onTap: (){
+                Navigator.pushNamed(context, route.toDoListPage);
+              }
+            ),
           ),
-
           //DIVISORE
           Divider(),          
 
           //SETTIMANA CORRENTE
-          ListTile(
-            leading: Icon(Icons.table_rows_rounded),
-            title: const Text("Settimana Corrente"),
-            onTap: (){
-              Navigator.pushNamed(context, route.weekPage);
-            }  
+          Container(
+            height: 150,           
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage('assets/fotoWeekPage(2).jpg'),
+                colorFilter: ColorFilter.mode(
+                  Colors.white.withOpacity(0.4),
+                  BlendMode.srcOver
+                ),
+              ),
+            ),
+            child: 
+            ListTile(
+              leading: Icon(Icons.table_rows_rounded),
+              title: Text("Settimana Corrente",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  shadows: [
+                    Shadow(
+                      blurRadius: 3.0,
+                      color: Colors.black.withOpacity(0.9),
+                      offset: Offset(-2,7.5),
+                    ),
+                  ],
+                ),
+              ),
+              onTap: (){
+                Navigator.pushNamed(context, route.weekPage);
+              }  
+            ),
           ),
-          
           //DIVISORE
           Divider(),
 
           //LIBRETTO
-          ListTile(
-            leading: Icon(Icons.menu_book_rounded),
-            title: const Text('Libretto'),
-            onTap: () => Navigator.pushNamed(context, route.listPage),
+          Container(
+            height: 150, 
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage('assets/fotoLibretto.jpg'),
+                colorFilter: ColorFilter.mode(
+                  Colors.white.withOpacity(0.4),
+                  BlendMode.srcOver
+                ),
+              ),
+            ),            
+            child: ListTile(
+              leading: Icon(Icons.menu_book_rounded),
+              title: Text('Libretto',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  shadows: [
+                    Shadow(
+                      blurRadius: 3.0,
+                      color: Colors.black.withOpacity(0.9),
+                      offset: Offset(-2,7.5),
+                    ),
+                  ],
+                ),
+              ),
+              onTap: () => Navigator.pushNamed(context, route.listPage),
+            ),
           ),
                     
           //DIVISORE
           Divider(),
 
-          /*
+          
           //STATISTICHE
-          ListTile(
-            leading: Icon(Icons.bar_chart_rounded),
-            title: const Text("Statistiche"),
-            onTap: (){
-              Navigator.pushNamed(context, route.weekPage);
-            }
+          Container(
+            height: 150, 
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage('assets/fotoStatsPage.jpg'),
+                colorFilter: ColorFilter.mode(
+                  Colors.white.withOpacity(0.4),
+                  BlendMode.srcOver
+                ),
+              ),
+            ),
+            child:
+            ListTile(
+              leading: Icon(Icons.bar_chart_rounded),
+              title: Text("Statistiche"
+              ,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  shadows: [
+                    Shadow(
+                      blurRadius: 3.0,
+                      color: Colors.black.withOpacity(0.9),
+                      offset: Offset(-2,7.5),
+                    ),
+                  ],
+                ),
+              ),
+              onTap: (){
+                Navigator.pushNamed(context, route.calendarPage);
+              }
+            ),
           ),
-          */
+          
 
         ]
       ),
