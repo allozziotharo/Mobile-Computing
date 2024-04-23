@@ -42,7 +42,7 @@ class NavBar extends StatelessWidget {
           //IN EVIDENZA
           ListTile(
             leading: Icon(Icons.favorite),
-            title: const Text('In Evidenza'),
+            title: const Text('Highlighted'),
             onTap: () => null,
           ),
           //LINK
@@ -54,13 +54,13 @@ class NavBar extends StatelessWidget {
           //CALENDARIO
           ListTile(
             leading: Icon(Icons.date_range),
-            title: const Text('Calendario'),
+            title: const Text('Calendar'),
             onTap: () => Navigator.pushNamed(context, route.calendarPage),
           ),
           //NOTIFICHE
           ListTile(
             leading: Icon(Icons.notifications),
-            title: Text('Notifiche'),
+            title: Text('Notifications'),
             onTap: () => null,
             trailing: ClipOval(
               child: Container(
@@ -84,7 +84,7 @@ class NavBar extends StatelessWidget {
           //IMPOSTAZIONI
           ListTile(
             leading: Icon(Icons.settings),
-            title: const Text('Impostazioni'),
+            title: const Text('Settings'),
             onTap: () => Navigator.pushNamed(context, route.settingsPage),
           ),
           Divider(),

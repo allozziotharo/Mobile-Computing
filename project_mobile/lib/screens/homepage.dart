@@ -155,7 +155,7 @@ class _HomePageState extends State<HomePage> {
             child: 
             ListTile(
               leading: Icon(Icons.table_rows_rounded),
-              title: Text("Settimana Corrente",
+              title: Text("Timetable",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 40,
@@ -193,7 +193,7 @@ class _HomePageState extends State<HomePage> {
             ),            
             child: ListTile(
               leading: Icon(Icons.menu_book_rounded),
-              title: Text('Libretto',
+              title: Text("Grades' Book",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 40,
@@ -232,7 +232,7 @@ class _HomePageState extends State<HomePage> {
             child:
             ListTile(
               leading: Icon(Icons.bar_chart_rounded),
-              title: Text("Statistiche"
+              title: Text("Stats"
               ,
                 textAlign: TextAlign.center,
                 style: TextStyle(

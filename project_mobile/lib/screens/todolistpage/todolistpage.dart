@@ -150,7 +150,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
                     else priority = int.parse(value);
                   },
                   decoration: InputDecoration(
-                    hintText: 'insert priority from 1 to 5 (otherwise it will be 0)', //TODO: non c'entra e va fittato
+                    hintText: 'insert priority from 1 to 5',
                   ),
                 ),
               ],
@@ -225,7 +225,7 @@ class _ToDoListWidgetState extends State<_ToDoListWidget> {
       color: () {
         switch(widget.task.priority) {
           case 1:
-            return Color.fromARGB(66, 63, 147, 66);
+            return Color.fromARGB(66, 45, 133, 48);
           case 2:
             return const Color.fromARGB(255, 38, 91, 39);
           case 3:

@@ -53,7 +53,7 @@ Future<void> createUser() async {
             //questo container ha un messaggio di benvenuto
             Container(
               padding: EdgeInsets.only(left: 35, top: 110),
-              child: Text('Benvenuto!',
+              child: Text('Welcome!',
                   style: TextStyle(color: Colors.white, fontSize: 33)),
             ), //Container
             //questo container contiene le caselle di testo per l'email,username e password
@@ -74,7 +74,7 @@ Future<void> createUser() async {
                             decoration: InputDecoration(
                                 fillColor: Colors.grey.shade100,
                                 filled: true,
-                                hintText: 'E-mail',
+                                hintText: 'Mail address',
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
                           ),
                           TextField(
@@ -91,13 +91,13 @@ Future<void> createUser() async {
                           ElevatedButton(onPressed: () {
                             isLogin ? signIn() : createUser(); //a seconda del valore di isLogin (variabile d'istanza), o fai l'uno : l'altro
                           },
-                              child: Text(isLogin ? 'Accedi' : 'Registrati')),
+                              child: Text(isLogin ? 'Login' : 'Register')),
                           
                           TextButton(onPressed: () {
                             setState(() {
                               isLogin = !isLogin;
                             });
-                          }, child: Text(isLogin? 'Non hai un account? Registrati!' : 'Hai un account? Accedi!',
+                          }, child: Text(isLogin? 'Still no account? Register here!' : 'Already signed up? Log in!',
                           style: TextStyle(color: Colors.white),
                           )),      
                         ],   

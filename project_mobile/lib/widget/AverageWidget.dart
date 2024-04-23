@@ -18,7 +18,7 @@ class AverageWidget extends StatelessWidget {
           children: [
             Text("CFU: 0"),
             Divider(),
-            Text("MEDIA: " + average.toString()),
+            Text("AVERAGE: " + average.toString()),
           ],
         ));
   }
