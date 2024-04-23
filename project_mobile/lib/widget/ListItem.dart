@@ -14,6 +14,19 @@ class ListItem {
     required this.voto,
     required this.data,
   });
+
+  ListItem.fromMap(Map<String, dynamic> map)
+      : esame = map['esame'],
+        voto = map['voto'],
+        data = map['data'];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'esame': esame,
+      'voto': voto,
+      'data': data,
+    };
+  }
 }
 
 //questa classe costruisce il widget che viene visualizzato

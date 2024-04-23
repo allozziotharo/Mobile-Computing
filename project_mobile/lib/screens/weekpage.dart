@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_mobile/screens/week_pref.dart';
+import 'package:project_mobile/preferences/week_pref.dart';
 import 'package:project_mobile/widget/DayItem.dart';
 import 'package:project_mobile/widget/NavBar.dart';
 import 'package:project_mobile/widget/flashMessages/confirmMessage.dart';
@@ -55,9 +55,7 @@ class _WeekPageState extends State<WeekPage> {
 
   @override
   void initState() {
-    super.initState();
-
-    //inizializzare le variabili di istanza
+    super.initState(); //inizializzare le variabili di istanza
     //... dayToList = WeekPref.getMap;
     dayToList = WeekPreferences.getDay2List();
     setState(() {});
@@ -66,12 +64,27 @@ class _WeekPageState extends State<WeekPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(),
-      appBar: AppBar(title: const Text("your week")),
+      drawer: NavBar(), //menù laterale
+      appBar: AppBar(
+          title: Row(
+        //non funziona il tooltip
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text("YOUR WEEK"),
+          IconButton(
+              //si può fare meglio
+              onPressed: () {
+                showWarningMessage(
+                    "use this page to set your classes", context);
+              },
+              icon: Icon(Icons.lightbulb_outline)),
+        ],
+      )),
+      backgroundColor: Colors.blue[800],
       body: Column(
         children: [
           Padding(
-              padding: const EdgeInsets.only(top: 15),
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 5),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -90,13 +103,32 @@ class _WeekPageState extends State<WeekPage> {
                             child: DayItemWidget(day: _days[index]),
                           ),
                         ))),
-                    SizedBox(height: 20),
-                    Text("day selected: " + _daySelected,
-                        style: TextStyle(fontSize: 24, color: Colors.black)),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 20),
+                    if (_daySelected.isNotEmpty)
+                      Text("DAY SELECTED: " + _daySelected,
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                    if (_daySelected.isEmpty)
+                      const Text(
+                        "CHOOSE A DAY!",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
                   ])),
           if (_daySelected.isNotEmpty) // Check if a day is selected
             Expanded(
+                child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10))),
+              padding: EdgeInsets.only(top: 20),
               child: AnimatedList(
                 key: _dayKey[_daySelected],
                 initialItemCount:
@@ -107,30 +139,31 @@ class _WeekPageState extends State<WeekPage> {
                   onClicked: () => removeItem(index),
                 ),
               ),
-            )
-          else
-            Center(
-              child: const Text(
-                "select a day to see events",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
+            ))
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          if (_daySelected == "") {
-            showWarningMessage(
-                "you must select a day first! BITCHASSNIGGHI", context);
-          } else {
-            readData();
-          }
-        },
-      ),
+      //BOTTOM NAVIGATION
+      bottomNavigationBar: BottomNavigationBar(items: [
+        //il primo elemento è in blu sto nero
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
+        BottomNavigationBarItem(icon: Icon(Icons.save_rounded), label: 'save'),
+        BottomNavigationBarItem(
+            //non compare l'icona poraccio io
+            icon: IconButton(
+                onPressed: () {
+                  if (_daySelected == "") {
+                    showWarningMessage(
+                        "you must select a day first! BITCHASSNIGGHI", context);
+                  } else {
+                    readData();
+                  }
+                },
+                icon: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                )),
+            label: 'add el to list'),
+      ]),
     );
   }
   /**************** FINE BUILD ****************/
@@ -144,51 +177,14 @@ class _WeekPageState extends State<WeekPage> {
             content: Column(mainAxisSize: MainAxisSize.min, children: [
               buildTextField('subject'),
               buildTextField('notes'),
-              TextField(
-                  controller: _timeControllerStart,
-                  decoration: InputDecoration(
-                      labelText: 'START',
-                      filled: true,
-                      prefixIcon: const Icon(Icons.access_time),
-                      enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue))),
-                  readOnly: true,
-                  onTap: () async {
-                    final TimeOfDay? picked = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay(hour: 0, minute: 0));
-                    if (picked != null) {
-                      setState(() {
-                        _timeControllerStart.text = picked.format(context);
-                        start = picked;
-                      });
-                    }
-                  }),
-              TextField(
-                  controller: _timeControllerEnd,
-                  decoration: InputDecoration(
-                      labelText: 'END',
-                      filled: true,
-                      prefixIcon: const Icon(Icons.access_time),
-                      enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue))),
-                  readOnly: true,
-                  onTap: () async {
-                    final TimeOfDay? picked = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay(hour: 0, minute: 0));
-                    if (picked != null) {
-                      setState(() {
-                        _timeControllerEnd.text = picked.format(context);
-                        end = picked;
-                      });
-                    }
-                  }),
+              buildTimeField('START', _timeControllerStart),
+              buildTimeField('END', _timeControllerEnd),
             ]),
             actions: [
               TextButton(
                 child: const Text('CANCEL'),
                 onPressed: () {
+                  cleanController();
                   Navigator.of(context).pop();
                 },
               ),
@@ -199,14 +195,12 @@ class _WeekPageState extends State<WeekPage> {
                       showErrorMessage(
                           "ending time must be after the starting one",
                           context);
-                      _timeControllerStart.text = '';
-                      _timeControllerEnd.text = '';
+                      //non resetto i parametri così modifico da dove ero rimasto
                       Navigator.of(context).pop();
                     } else {
                       insertItem(subject, notes, start, end);
                       showConfirmMessage("class succesfully added!", context);
-                      _timeControllerStart.text = '';
-                      _timeControllerEnd.text = '';
+                      cleanController();
                       Navigator.of(context).pop();
                     }
                   }),
@@ -247,11 +241,17 @@ class _WeekPageState extends State<WeekPage> {
   }
   /*************************************************/
 
+  void cleanController() {
+    this._timeControllerStart.text = '';
+    this._timeControllerEnd.text = '';
+  }
+
   bool isTimeIncorrect(TimeOfDay end, TimeOfDay start) {
     return end.hour < start.hour ||
         (end.hour == start.hour && end.minute <= start.minute);
   }
 
+// restituisce il textfield
   Widget buildTextField(String hintText) {
     return TextField(
       onChanged: (value) {
@@ -267,12 +267,12 @@ class _WeekPageState extends State<WeekPage> {
     );
   }
 
-  Widget buildTimeField(String labelText) {
-    //riuscire a trovare il modo per usarlo
+// restituisce il textfield per gli orari
+  Widget buildTimeField(String hintText, TextEditingController controller) {
     return TextField(
-        controller: _timeControllerStart,
+        controller: controller,
         decoration: InputDecoration(
-            labelText: labelText,
+            hintText: hintText,
             filled: true,
             prefixIcon: const Icon(Icons.access_time),
             enabledBorder: const OutlineInputBorder(
@@ -283,12 +283,12 @@ class _WeekPageState extends State<WeekPage> {
               context: context, initialTime: TimeOfDay(hour: 0, minute: 0));
           if (picked != null) {
             setState(() {
-              if (labelText == 'START') {
-                _timeControllerStart.text = picked.format(context);
-                start = picked;
+              if (hintText == 'START') {
+                controller.text = picked.format(context);
+                this.start = picked;
               } else {
-                _timeControllerEnd.text = picked.format(context);
-                end = picked;
+                controller.text = picked.format(context);
+                this.end = picked;
               }
             });
           }

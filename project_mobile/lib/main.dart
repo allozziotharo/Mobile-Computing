@@ -1,15 +1,18 @@
-//COMMENTATO PER PROVA SHAREDP CON USERPAGE
 //import del materiale standard
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_mobile/preferences/home_pref.dart';
+import 'package:project_mobile/preferences/list_pref.dart';
 
 //import del controller per la navigazione
 import 'package:project_mobile/route/route.dart' as route;
-import 'package:project_mobile/screens/week_pref.dart';
+import 'package:project_mobile/screens/homepage.dart';
+import 'package:project_mobile/widget/grafico/newGraph.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await WeekPreferences.init();
+  await HomePreferences.init();
+  await ListPreferences.init();
   runApp(MyApp());
 }
 
@@ -21,8 +24,28 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           textTheme: GoogleFonts.oxaniumTextTheme(Theme.of(context).textTheme)),
       onGenerateRoute: route.controller, //crea il controller nel file route
-      initialRoute:
-          route.homePage, //la prima pagina visualizzata è quella di login
+      //initialRoute:
+      //route.homePage, //la prima pagina visualizzata è quella di login
+      home: HomePage(),
+    );
+  }
+}
+
+/*home page per provare il grafico*/
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blueGrey[900],
+      body: Center(
+          child: Container(
+        color: Colors.blueGrey[900],
+        height: 400,
+        width: 400,
+        child: MyBarChart(),
+      )),
     );
   }
 }

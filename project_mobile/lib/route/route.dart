@@ -2,12 +2,14 @@
 import 'package:flutter/material.dart';
 
 //faccio l'import delle pagine in cui voglio navigare
+import 'package:project_mobile/preferences/home_pref.dart';
 import 'package:project_mobile/screens/homepage.dart';
 import 'package:project_mobile/screens/loginpage.dart';
 import 'package:project_mobile/screens/settingspage.dart';
 import 'package:project_mobile/screens/signup.dart';
 import 'package:project_mobile/screens/calendar.dart';
 import 'package:project_mobile/screens/listpage.dart';
+import 'package:project_mobile/preferences/week_pref.dart';
 import 'package:project_mobile/screens/weekpage.dart';
 //import 'package:project_mobile/screens/week_pref.dart';
 
@@ -36,6 +38,7 @@ Route<dynamic> controller(RouteSettings settings) {
     case listPage:
       return MaterialPageRoute(builder: (context) => ListPage());
     case weekPage:
+      WeekPreferences.init(); // si può fare
       return MaterialPageRoute(builder: (context) => WeekPage());
     default:
       throw ('This route name does not exist');

@@ -15,8 +15,10 @@ class NavBar extends StatelessWidget {
         children: [
           //prima parte del menu quella che contieni gli info dell'user
           UserAccountsDrawerHeader(
-            accountName: const Text('Germano'),
-            accountEmail: const Text('fragermano@numberone.com'),
+            accountName:
+                const Text('Germano', style: TextStyle(color: Colors.white)),
+            accountEmail: const Text('fragermano@numberone.com',
+                style: TextStyle(color: Colors.white)),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.asset(
@@ -31,8 +33,7 @@ class NavBar extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: NetworkImage(//così si prende una risorsa online
-                    'https://oflutter.com/wp-content/uploads/2021/02/profile-bg3.jpg'),
+                image: AssetImage("assets/userbackground.jpg"),
               ),
             ),
           ), //userheader

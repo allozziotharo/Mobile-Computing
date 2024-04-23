@@ -1,27 +1,26 @@
 //materiale standard
 import 'package:flutter/material.dart';
+import 'package:project_mobile/preferences/home_pref.dart';
 import 'package:project_mobile/widget/NavBar.dart';
-//import per usare route
-import 'package:project_mobile/route/route.dart' as route;
+//import per usare route  -> sta su navBar non serve qui
+//import 'package:project_mobile/route/route.dart' as route;
 
 //screen che contiene un menu laterale a scomparsa
 class HomePage extends StatefulWidget {
-  //costruttore privato
-  HomePage._();
-  //istanza unica
-  static HomePage _instance = HomePage._();
-  //metodo factory
-  factory HomePage() {
-    return _instance;
-  }
-
-  int counter = 0;
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  int counter = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    counter = HomePreferences.getCounter();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +34,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '${widget.counter}',
+              '${counter}',
               style: TextStyle(color: Colors.black, fontSize: 20),
             ),
             CircleAvatar(
@@ -44,7 +43,8 @@ class _HomePageState extends State<HomePage> {
               child: IconButton(
                   onPressed: () {
                     setState(() {
-                      widget.counter++;
+                      counter++;
+                      HomePreferences.setCounter(counter);
                     });
                   },
                   icon: Icon(Icons.add)),

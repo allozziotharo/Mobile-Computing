@@ -11,13 +11,18 @@ class DayItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(8),
-      width: 160,
-      height: 40,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: Colors.blueGrey[600]),
+        color: Colors.blue[600],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(8),
       child: Center(
-        child: Text(day, style: TextStyle(fontSize: 30, color: Colors.white)),
+        child: Text(day,
+            style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.white)),
       ),
     );
   }
