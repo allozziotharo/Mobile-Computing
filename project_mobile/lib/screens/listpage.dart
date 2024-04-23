@@ -1,8 +1,10 @@
 //materiale standard
 import 'package:flutter/material.dart';
+import 'package:project_mobile/preferences/list_pref.dart';
 import 'package:project_mobile/widget/AverageWidget.dart';
 import 'package:project_mobile/widget/ListItem.dart';
 import 'package:project_mobile/widget/degreeWidget/graph.dart';
+import 'package:project_mobile/widget/flashMessages/errorMessage.dart';
 
 class ListPage extends StatefulWidget {
   @override
@@ -17,13 +19,19 @@ class _ListPageState extends State<ListPage> {
   final listKey = GlobalKey<AnimatedListState>();
 
   //elementi della animated list
-  final List<ListItem> items = [];
+  List<ListItem> items = [];
 
   //lista che deve contenere i voti degli esami
   List<double> degree = [];
 
   //variabile che dovrà contenere
   double currentAverage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    items = ListPreferences.getListItem();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +90,7 @@ class _ListPageState extends State<ListPage> {
       ),
       duration: Duration(milliseconds: 250),
     );
+    ListPreferences.setListItem(items);
     setState(() {}); //questo setState serve a fare il refresh della pagina
   }
   /********************************************/
@@ -154,10 +163,23 @@ class _ListPageState extends State<ListPage> {
               TextButton(
                 child: const Text('PROCEED'),
                 onPressed: () {
-                  insertItem(esame, voto, data);
-                  _dateController.text = '';
-                  setState(() {});
-                  Navigator.of(context).pop();
+                  if (voto > 30 || voto < 18) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: ErrorMessageContent(
+                          errorText:
+                              "degree must be a value between 18 and 30!"),
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                    ));
+                    _dateController.text = "";
+                    Navigator.of(context).pop();
+                  } else {
+                    insertItem(esame, voto, data);
+                    _dateController.text = '';
+                    setState(() {});
+                    Navigator.of(context).pop();
+                  }
                 },
               ),
             ],
@@ -174,6 +196,9 @@ class _ListPageState extends State<ListPage> {
     degree.add(
         double.parse(newItem.voto.toString())); //inserisco negli el del grafico
     listKey.currentState!.insertItem(0, duration: Duration(milliseconds: 250));
+    ListPreferences.setListItem(items);
   }
   /*****************************************************/
+
+  List<ListItem> getItems() => this.items;
 }

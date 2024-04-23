@@ -15,8 +15,10 @@ class NavBar extends StatelessWidget {
         children: [
           //prima parte del menu quella che contieni gli info dell'user
           UserAccountsDrawerHeader(
-            accountName: const Text('Germano'),
-            accountEmail: const Text('fragermano@numberone.com'),
+            accountName:
+                const Text('Germano', style: TextStyle(color: Colors.white)),
+            accountEmail: const Text('fragermano@numberone.com',
+                style: TextStyle(color: Colors.white)),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.asset(
@@ -31,8 +33,7 @@ class NavBar extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: NetworkImage(//così si prende una risorsa online
-                    'https://oflutter.com/wp-content/uploads/2021/02/profile-bg3.jpg'),
+                image: AssetImage("assets/userbackground.jpg"),
               ),
             ),
           ), //userheader
@@ -41,19 +42,19 @@ class NavBar extends StatelessWidget {
           //IN EVIDENZA
           ListTile(
             leading: Icon(Icons.favorite),
-            title: Text('In Evidenza'),
+            title: const Text('In Evidenza'),
             onTap: () => null,
           ),
           //LINK
           ListTile(
             leading: Icon(Icons.share),
-            title: Text('Links'),
+            title: const Text('Links'),
             onTap: () => null,
           ),
           //CALENDARIO
           ListTile(
             leading: Icon(Icons.date_range),
-            title: Text('Calendario'),
+            title: const Text('Calendario'),
             onTap: () => Navigator.pushNamed(context, route.calendarPage),
           ),
           //NOTIFICHE
@@ -67,7 +68,7 @@ class NavBar extends StatelessWidget {
                 width: 20,
                 height: 20,
                 child: Center(
-                  child: Text(
+                  child: const Text(
                     '1', //ora metto uno per comodità qui bisogna aggiungere la logica per cui si aggiunge una notifica
                     style: TextStyle(
                       color: Colors.white,
@@ -83,16 +84,21 @@ class NavBar extends StatelessWidget {
           //IMPOSTAZIONI
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Impostazioni'),
+            title: const Text('Impostazioni'),
             onTap: () => Navigator.pushNamed(context, route.settingsPage),
           ),
           Divider(),
           //LOGOUT
           ListTile(
             leading: Icon(Icons.exit_to_app),
-            title: Text('Logout'),
-            onTap: () => Navigator.pushNamed(context, route.authPage),
+            title: const Text('Logout'),
+            onTap: () => Navigator.pushNamed(context, route.loginPage),
           ),
+          ListTile(
+            leading: Icon(Icons.wheelchair_pickup_outlined),
+            title: const Text('classes page'),
+            onTap: () => Navigator.pushNamed(context, route.weekPage),
+          )
           //fine lista
         ],
       ),

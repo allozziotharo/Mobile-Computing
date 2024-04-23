@@ -19,6 +19,7 @@ class MyGraph extends StatelessWidget {
     //ciò che viene visualizzato
     return BarChart(
       BarChartData(
+          groupsSpace: 10,
           alignment: BarChartAlignment.start,
           maxY: 30,
           minY: 0,
@@ -41,6 +42,7 @@ class MyGraph extends StatelessWidget {
                           toY: 30,
                           color: Colors.grey[200],
                         )),
+                    BarChartRodData(toY: 0),
                   ]))
               .toList()),
     );

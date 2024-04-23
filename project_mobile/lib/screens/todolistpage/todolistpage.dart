@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:project_mobile/screens/todovideo/task.dart';
-import 'package:project_mobile/screens/todovideo/todolist_pref.dart';
+import 'package:project_mobile/screens/todolistpage/task.dart';
+import 'package:project_mobile/preferences/todolist_pref.dart';
 ///---------------------------------------------------------------
 
 class ToDoListPage extends StatefulWidget {

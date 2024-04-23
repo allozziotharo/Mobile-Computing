@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_mobile/screens/listpage.dart';
+//import 'package:project_mobile/screens/listpage.dart';
 
-import 'package:project_mobile/widget/TextFields.dart';
-import 'package:project_mobile/widget/CustomRow.dart';
+//import 'package:project_mobile/widget/TextFields.dart';
+//import 'package:project_mobile/widget/CustomRow.dart';
 
 import 'package:project_mobile/services/auth.dart';
 
-import 'package:project_mobile/route/route.dart' as route;
+//import 'package:project_mobile/route/route.dart' as route;
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -42,7 +42,10 @@ Future<void> createUser() async {
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/sfondo_login.jpg'), fit: BoxFit.cover)),
+              image: AssetImage('assets/sfondo_login.jpg'),
+                fit: BoxFit.cover
+                )
+              ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(
@@ -94,7 +97,9 @@ Future<void> createUser() async {
                             setState(() {
                               isLogin = !isLogin;
                             });
-                          }, child: Text(isLogin? 'Non hai un account? Registrati!' : 'Hai un account? Accedi!'))      
+                          }, child: Text(isLogin? 'Non hai un account? Registrati!' : 'Hai un account? Accedi!',
+                          style: TextStyle(color: Colors.white),
+                          )),      
                         ],   
                       ),
                     ),

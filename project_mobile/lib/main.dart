@@ -7,19 +7,21 @@ import 'package:project_mobile/route/route.dart' as route;
 
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:project_mobile/screens/todovideo/todolist_pref.dart';
+import 'package:project_mobile/preferences/todolist_pref.dart';
 import 'firebase_options.dart';
 
 
 //le metto tutte sticazzi cosi non abbiamo problemi
 import 'package:project_mobile/screens/homepage.dart';
-import 'package:project_mobile/screens/loginpage.dart';
-import 'package:project_mobile/screens/settingspage.dart';
-import 'package:project_mobile/screens/signup.dart';
-import 'package:project_mobile/screens/calendar.dart';
-import 'package:project_mobile/screens/listpage.dart';
+//import 'package:project_mobile/screens/loginpage.dart';
+//import 'package:project_mobile/screens/settingspage.dart';
+//import 'package:project_mobile/screens/signup.dart';
+//import 'package:project_mobile/screens/calendar.dart';
+//import 'package:project_mobile/screens/listpage.dart';
 import 'package:project_mobile/screens/authpage.dart';
-import 'package:project_mobile/screens/todovideo/todolistpage.dart';
+import 'package:project_mobile/preferences/list_pref.dart';
+
+import 'package:project_mobile/screens/todolistpage/todolistpage.dart';
 
 import 'package:project_mobile/services/auth.dart';
 //import 'package:recaptcha_v2_checkbox/recaptcha_v2_checkbox.dart';
@@ -33,6 +35,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await ToDoListPreferences.init();
+  await ListPreferences.init();
   runApp(MyApp());
 }
 

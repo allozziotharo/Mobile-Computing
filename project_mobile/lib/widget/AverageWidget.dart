@@ -22,4 +22,6 @@ class AverageWidget extends StatelessWidget {
           ],
         ));
   }
+
+  void calculator(int sum, int length) {}
 }

@@ -11,6 +11,12 @@
             "request": "launch",
             "program": "lib/main.dart"
         },
+        {
+            "name": "Flutter (A22 API 33)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart"
+        },
         
         {
             "name": "project_mobile",
