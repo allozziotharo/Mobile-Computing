@@ -2,17 +2,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project_mobile/preferences/home_pref.dart';
-import 'package:project_mobile/preferences/list_pref.dart';
+import 'package:project_mobile/preferences/exam_pref.dart';
 
 //import del controller per la navigazione
 import 'package:project_mobile/route/route.dart' as route;
 import 'package:project_mobile/screens/homepage.dart';
-import 'package:project_mobile/widget/grafico/newGraph.dart';
+import 'package:project_mobile/screens/statistiche.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HomePreferences.init();
-  await ListPreferences.init();
+  await ExamPreferences.init();
   runApp(MyApp());
 }
 
@@ -26,12 +26,12 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: route.controller, //crea il controller nel file route
       //initialRoute:
       //route.homePage, //la prima pagina visualizzata è quella di login
-      home: HomePage(),
+      home: Statistiche(),
     );
   }
 }
 
-/*home page per provare il grafico*/
+/*home page per provare il grafico
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -49,7 +49,7 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
-
+*/
 
 
 /*

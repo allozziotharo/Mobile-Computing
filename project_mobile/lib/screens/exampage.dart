@@ -1,17 +1,17 @@
 //materiale standard
 import 'package:flutter/material.dart';
-import 'package:project_mobile/preferences/list_pref.dart';
+import 'package:project_mobile/preferences/exam_pref.dart';
 import 'package:project_mobile/widget/AverageWidget.dart';
-import 'package:project_mobile/widget/ListItem.dart';
+import 'package:project_mobile/widget/ExamItem.dart';
 import 'package:project_mobile/widget/degreeWidget/graph.dart';
 import 'package:project_mobile/widget/flashMessages/errorMessage.dart';
 
-class ListPage extends StatefulWidget {
+class ExamPage extends StatefulWidget {
   @override
-  _ListPageState createState() => _ListPageState();
+  _ExamPageState createState() => _ExamPageState();
 }
 
-class _ListPageState extends State<ListPage> {
+class _ExamPageState extends State<ExamPage> {
   //per far vedere cosa è stato selezionato nel datepicker
   TextEditingController _dateController = TextEditingController();
 
@@ -19,7 +19,7 @@ class _ListPageState extends State<ListPage> {
   final listKey = GlobalKey<AnimatedListState>();
 
   //elementi della animated list
-  List<ListItem> items = [];
+  List<ExamItem> items = [];
 
   //lista che deve contenere i voti degli esami
   List<double> degree = [];
@@ -30,7 +30,7 @@ class _ListPageState extends State<ListPage> {
   @override
   void initState() {
     super.initState();
-    items = ListPreferences.getListItem();
+    items = ExamPreferences.getListItem();
   }
 
   @override
@@ -57,7 +57,7 @@ class _ListPageState extends State<ListPage> {
             child: AnimatedList(
               key: listKey,
               initialItemCount: items.length,
-              itemBuilder: (context, index, animation) => ListItemWidget(
+              itemBuilder: (context, index, animation) => ExamItemWidget(
                 item: items[index],
                 animation: animation,
                 onClicked: () => removeItem(index),
@@ -79,18 +79,17 @@ class _ListPageState extends State<ListPage> {
   //funzione che rimuove un list item invocata dal cestino
   void removeItem(int index) {
     final removedItem = items[index];
-    degree.removeAt(index); //rimuovo gli elementi dalle liste
     items.removeAt(index);
     listKey.currentState!.removeItem(
       index,
-      (context, animation) => ListItemWidget(
+      (context, animation) => ExamItemWidget(
         item: removedItem,
         animation: animation,
         onClicked: () {},
       ),
       duration: Duration(milliseconds: 250),
     );
-    ListPreferences.setListItem(items);
+    ExamPreferences.setListItem(items);
     setState(() {}); //questo setState serve a fare il refresh della pagina
   }
   /********************************************/
@@ -190,15 +189,13 @@ class _ListPageState extends State<ListPage> {
 
   //funzione che chiama il costruttore di list item e lo inserisce nella lista
   void insertItem(String esame, int voto, String data) {
-    final newItem = ListItem(esame: esame, voto: voto, data: data);
+    final newItem = ExamItem(esame: esame, voto: voto, data: data);
     currentAverage += voto; //aggiornamento della media
     items.insert(0, newItem); //inserisco tra gli elemnti dell'animated list
-    degree.add(
-        double.parse(newItem.voto.toString())); //inserisco negli el del grafico
     listKey.currentState!.insertItem(0, duration: Duration(milliseconds: 250));
-    ListPreferences.setListItem(items);
+    ExamPreferences.setListItem(items);
   }
   /*****************************************************/
 
-  List<ListItem> getItems() => this.items;
+  List<ExamItem> getItems() => this.items;
 }

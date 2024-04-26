@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project_mobile/preferences/list_pref.dart';
-import 'package:project_mobile/widget/ListItem.dart';
+import 'package:project_mobile/preferences/exam_pref.dart';
+import 'package:project_mobile/widget/ExamItem.dart';
 import 'package:project_mobile/widget/degreeWidget/graph.dart';
 
 class StatsPage extends StatefulWidget {
-  final List<ListItem> items;
+  final List<ExamItem> items;
   StatsPage({required this.items});
 
   @override
@@ -18,7 +18,7 @@ class _StatsPageState extends State<StatsPage> {
   @override
   void initState() {
     super.initState();
-    item2int(ListPreferences.getListItem());
+    item2int(ExamPreferences.getListItem());
   }
 
   @override
@@ -34,7 +34,7 @@ class _StatsPageState extends State<StatsPage> {
     );
   }
 
-  void item2int(List<ListItem> list) {
+  void item2int(List<ExamItem> list) {
     for (var item in list) {
       degree.add(item.voto.toDouble());
     }

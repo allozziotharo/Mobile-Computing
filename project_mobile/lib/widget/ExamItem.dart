@@ -2,20 +2,20 @@
 import 'package:flutter/material.dart';
 //import per usare route
 
-class ListItem {
+class ExamItem {
   //classe del singolo elemento della lista
   final String esame; //attributi dell'oggetto
   final int voto;
   final String data;
 
   //costruttore (non possono essere assenti i parametri)
-  ListItem({
+  ExamItem({
     required this.esame,
     required this.voto,
     required this.data,
   });
 
-  ListItem.fromMap(Map<String, dynamic> map)
+  ExamItem.fromMap(Map<String, dynamic> map)
       : esame = map['esame'],
         voto = map['voto'],
         data = map['data'];
@@ -30,12 +30,12 @@ class ListItem {
 }
 
 //questa classe costruisce il widget che viene visualizzato
-class ListItemWidget extends StatelessWidget {
-  final ListItem item;
+class ExamItemWidget extends StatelessWidget {
+  final ExamItem item;
   final Animation<double> animation;
   final VoidCallback? onClicked;
 
-  const ListItemWidget(
+  const ExamItemWidget(
       {required this.item,
       required this.onClicked,
       required this.animation,
