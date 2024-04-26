@@ -28,7 +28,6 @@ import 'package:project_mobile/services/auth.dart';
 
 
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -49,86 +48,6 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-/*
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: Auth().authStateChanges,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-                textTheme: GoogleFonts.oxaniumTextTheme(Theme.of(context).textTheme)),
-            onGenerateRoute: route.controller,
-            initialRoute: route.homePage,
-          );
-        } else {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-                textTheme: GoogleFonts.oxaniumTextTheme(Theme.of(context).textTheme)),
-            onGenerateRoute: route.controller,
-            initialRoute: route.authPage,
-          );
-        }
-      },
-    );
-  }
-}
-*/  //fatta usando il routing de andrea
-
-/*
-class _MyAppState extends State<MyApp> {
-
-@override
-Widget build(BuildContext context) {
-  return MaterialApp(
-      theme: ThemeData(
-          textTheme: GoogleFonts.oxaniumTextTheme(Theme.of(context).textTheme)),
-      home: StreamBuilder(
-        stream: Auth().authStateChanges,
-        builder: (context, snapshot) {
-          if(snapshot.hasData) {
-            return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                theme: ThemeData(
-                    textTheme: GoogleFonts.oxaniumTextTheme(Theme.of(context).textTheme)),
-                onGenerateRoute: route.controller, //crea il controller nel file route
-                initialRoute: route.listPage, //la prima pagina visualizzata è quella di login
-            );
-          }
-          else {
-            return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                theme: ThemeData(
-                    textTheme: GoogleFonts.oxaniumTextTheme(Theme.of(context).textTheme)),
-                onGenerateRoute: route.controller, //crea il controller nel file route
-                initialRoute: route.authPage,
-            );
-          }
-        }
-      )
-    );
-  }
-}
-*/
-/*
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          textTheme: GoogleFonts.oxaniumTextTheme(Theme.of(context).textTheme)),
-      onGenerateRoute: route.controller, //crea il controller nel file route
-      initialRoute:
-          route.listPage, //la prima pagina visualizzaa è quella di login
-    );
-  }
-}*/  //instradamento andrea
-
 class _MyAppState extends State<MyApp> {
 
 @override
@@ -141,9 +60,9 @@ Widget build(BuildContext context) {
       home: StreamBuilder(
         stream: Auth().authStateChanges,
         builder: (context, snapshot) {
+
           if(snapshot.hasData) {
             ToDoListPage();
-     //       ToDoListPage().sharedPreferences.
             return HomePage();
           }
           else {
