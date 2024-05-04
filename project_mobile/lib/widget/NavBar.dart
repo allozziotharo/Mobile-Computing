@@ -49,7 +49,7 @@ class NavBar extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.share),
             title: const Text('Links'),
-            onTap: () => null,
+            onTap: () => Navigator.pushNamed(context, route.statsPage),
           ),
           //CALENDARIO
           ListTile(

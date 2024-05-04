@@ -7,7 +7,6 @@ import 'package:project_mobile/preferences/exam_pref.dart';
 //import del controller per la navigazione
 import 'package:project_mobile/route/route.dart' as route;
 import 'package:project_mobile/screens/homepage.dart';
-import 'package:project_mobile/screens/statistiche.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: route.controller, //crea il controller nel file route
       //initialRoute:
       //route.homePage, //la prima pagina visualizzata è quella di login
-      home: Statistiche(),
+      home: HomePage(),
     );
   }
 }

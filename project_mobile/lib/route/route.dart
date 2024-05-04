@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 //faccio l'import delle pagine in cui voglio navigare
 import 'package:project_mobile/screens/homepage.dart';
 import 'package:project_mobile/screens/loginpage.dart';
-import 'package:project_mobile/widget/statswidget/pie/piegraph.dart';
+import 'package:project_mobile/screens/statistiche.dart';
 import 'package:project_mobile/screens/settingspage.dart';
 import 'package:project_mobile/screens/signup.dart';
-import 'package:project_mobile/screens/calendar.dart';
+import 'package:project_mobile/screens/calendarpage.dart';
 import 'package:project_mobile/screens/exampage.dart';
 import 'package:project_mobile/preferences/week_pref.dart';
 import 'package:project_mobile/screens/weekpage.dart';
@@ -30,13 +30,13 @@ Route<dynamic> controller(RouteSettings settings) {
     case homePage:
       return MaterialPageRoute(builder: (context) => HomePage());
     case statsPage:
-      return MaterialPageRoute(builder: (context) => MyPieChart());
+      return MaterialPageRoute(builder: (context) => Statistiche());
     case settingsPage:
       return MaterialPageRoute(builder: (context) => SettingsPage());
     case signupPage:
       return MaterialPageRoute(builder: (context) => SignUpPage());
     case calendarPage:
-      return MaterialPageRoute(builder: (context) => Calendar());
+      return MaterialPageRoute(builder: (context) => CalendarPage());
     case examPage:
       return MaterialPageRoute(builder: (context) => ExamPage());
     case weekPage:

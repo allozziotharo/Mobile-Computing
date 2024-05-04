@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_mobile/preferences/exam_pref.dart';
 import 'package:project_mobile/widget/ExamItem.dart';
+import 'package:project_mobile/widget/NavBar.dart';
 import 'package:project_mobile/widget/statswidget/bar/bargraph.dart';
 import 'package:project_mobile/widget/statswidget/pie/piegraph.dart';
 
@@ -24,6 +25,7 @@ class _StatisticheState extends State<Statistiche> {
       appBar: AppBar(
         title: const Text("statistiche"),
       ),
+      drawer: NavBar(),
       body: SingleChildScrollView(
           child: Column(
         children: [

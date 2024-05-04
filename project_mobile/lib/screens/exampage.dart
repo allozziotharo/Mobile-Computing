@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:project_mobile/preferences/exam_pref.dart';
 import 'package:project_mobile/widget/AverageWidget.dart';
 import 'package:project_mobile/widget/ExamItem.dart';
-import 'package:project_mobile/widget/degreeWidget/graph.dart';
 import 'package:project_mobile/widget/flashMessages/errorMessage.dart';
 
 class ExamPage extends StatefulWidget {
@@ -46,12 +45,7 @@ class _ExamPageState extends State<ExamPage> {
           //WIDGET PER MEDIA E CFU
           AverageWidget(average: currentAverage / degree.length),
           //grafico
-          SizedBox(
-            height: 250,
-            child: MyGraph(
-              degreeList: degree,
-            ),
-          ),
+
           //la lista va sotto
           Expanded(
             child: AnimatedList(
