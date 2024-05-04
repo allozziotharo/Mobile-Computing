@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class MyTimePicker extends StatefulWidget {
-  final String pickerText; //la frase da visualizzare sopra al timePicker
+  //final String pickerText; //la frase da visualizzare sopra al timePicker
   final Function(TimeOfDay)
       onTimeConfirmed; //callback function per restituire l'orario scelto in questa classe
 
-  MyTimePicker({required this.pickerText, required this.onTimeConfirmed});
+  MyTimePicker({/*required this.pickerText,*/ required this.onTimeConfirmed});
 
   @override
   State<MyTimePicker> createState() => _MyTimePickerState();
@@ -26,20 +26,20 @@ class _MyTimePickerState extends State<MyTimePicker> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           //quello che c'è scritto sopra (preview dell'ora selezionata)
           /*  non mi interessa per ora far vedere l'ora corrente mentre viene scelta
-            Text("Pick Your Time! ${_hour}:${_minute} ${_timeFormat}",
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                  Text(widget.pickerText,
+                    style: TextStyle(color: Colors.white, fontSize: 24)),
             const SizedBox(
               height: 20,
             ),*/
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            margin: const EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
             decoration: BoxDecoration(
                 color: Colors.lightBlue,
                 borderRadius: BorderRadius.circular(10)),
@@ -47,8 +47,12 @@ class _MyTimePickerState extends State<MyTimePicker> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.pickerText,
-                    style: TextStyle(color: Colors.white, fontSize: 24)),
+                Text(
+                    "Pick Your Time! ${_hour}:${_minute.toString().padLeft(2, '0')} ${_timeFormat}",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: Colors.white)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -64,6 +68,7 @@ class _MyTimePickerState extends State<MyTimePicker> {
                       onChanged: (value) {
                         setState(() {
                           _hour = value;
+                          confirmTime(_hour, _minute, _timeFormat);
                         });
                       },
                       textStyle:
@@ -90,6 +95,7 @@ class _MyTimePickerState extends State<MyTimePicker> {
                       onChanged: (value) {
                         setState(() {
                           _minute = value;
+                          confirmTime(_hour, _minute, _timeFormat);
                         });
                       },
                       textStyle:
@@ -111,6 +117,7 @@ class _MyTimePickerState extends State<MyTimePicker> {
                           onTap: () {
                             setState(() {
                               _timeFormat = "AM";
+                              confirmTime(_hour, _minute, _timeFormat);
                             });
                           },
                           child: Container(
@@ -138,6 +145,7 @@ class _MyTimePickerState extends State<MyTimePicker> {
                           onTap: () {
                             setState(() {
                               _timeFormat = "PM";
+                              confirmTime(_hour, _minute, _timeFormat);
                             });
                           },
                           child: Container(
@@ -162,7 +170,7 @@ class _MyTimePickerState extends State<MyTimePicker> {
                     )
                   ],
                 ),
-                Row(
+                /*Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
@@ -174,7 +182,7 @@ class _MyTimePickerState extends State<MyTimePicker> {
                       child: const Text('Confirm'),
                     ),
                   ],
-                )
+                )*/
               ],
             ),
           ),
@@ -187,7 +195,11 @@ class _MyTimePickerState extends State<MyTimePicker> {
   void confirmTime(int hour, int minute, String format) {
     TimeOfDay time = TimeOfDay(hour: hour, minute: minute);
     if (format == "PM") {
-      time.replacing(hour: time.hour + 12);
+      if (time.hour == 12) {
+        time.replacing(hour: 0);
+      } else {
+        time.replacing(hour: time.hour + 12);
+      }
     }
     widget.onTimeConfirmed(
         time); //così la restituisce alla classe che chiama il timePicker

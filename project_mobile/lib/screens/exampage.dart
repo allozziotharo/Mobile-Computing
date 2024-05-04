@@ -1,7 +1,6 @@
 //materiale standard
 import 'package:flutter/material.dart';
 import 'package:project_mobile/preferences/exam_pref.dart';
-import 'package:project_mobile/widget/AverageWidget.dart';
 import 'package:project_mobile/widget/ExamItem.dart';
 import 'package:project_mobile/widget/flashMessages/errorMessage.dart';
 

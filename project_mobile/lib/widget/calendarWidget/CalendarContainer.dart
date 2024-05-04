@@ -113,14 +113,13 @@ class _CalendarContainerState extends State<CalendarContainer> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: Color(0xFFF1F4F8),
-                          borderRadius: BorderRadius.circular(8),
-                          shape: BoxShape.rectangle,
-                          border: Border.all(
-                            color: Color(0xFFE0E3E7),
-                            width: 1,
-                          ),
-                        ),
+                            color: Color(0xFFF1F4F8),
+                            borderRadius: BorderRadius.circular(8),
+                            shape: BoxShape.rectangle,
+                            border: Border.all(
+                              color: Color(0xFFE0E3E7),
+                              width: 1,
+                            )),
                         alignment: AlignmentDirectional(0, 0),
                         child: Checkbox(
                           value: completeness,
@@ -163,11 +162,9 @@ class _CalendarContainerState extends State<CalendarContainer> {
 
     // Check if it's past noon and add meridian indicator
     if (hour >= 12) {
-      formattedTime = formattedTime +
-          (hour == 12 ? ' pm' : ':${minute.toString().padLeft(2, '0')} pm');
+      formattedTime = formattedTime + (hour == 12 ? ' pm' : ' pm');
     } else {
-      formattedTime = formattedTime +
-          (hour == 0 ? ' am' : ':${minute.toString().padLeft(2, '0')} am');
+      formattedTime = formattedTime + (hour == 0 ? ' am' : ' am');
     }
     return formattedTime;
   }

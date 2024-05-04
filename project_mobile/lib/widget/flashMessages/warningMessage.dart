@@ -40,11 +40,11 @@ class WarningMessageContent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text("Attention!",
-                        style: TextStyle(fontSize: 22, color: Colors.white)),
+                        style: TextStyle(fontSize: 22, color: Colors.black)),
                     const Spacer(),
                     Text(
                       warningText,
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: TextStyle(fontSize: 16, color: Colors.black),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),

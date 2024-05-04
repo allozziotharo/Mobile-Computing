@@ -124,16 +124,16 @@ class _CalendarPageState extends State<CalendarPage> {
         builder: (BuildContext context) {
           return AlertDialog(
             scrollable: true,
-            title: const Text("bla"),
+            title: const Text("event creation"),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                buildTextField("Event Name"),
+                buildTextField("event Name"),
                 MyTimePicker(
-                    pickerText: "insert event time",
+                    //pickerText: "insert event time",
                     onTimeConfirmed: (time) {
-                      _timeEvent = time;
-                    }),
+                  _timeEvent = time;
+                }),
               ],
             ),
             actions: [
@@ -159,9 +159,9 @@ class _CalendarPageState extends State<CalendarPage> {
       }
       events[_selectedDay]!.add(Event(
           //poi aggiungo alla lista
-          titleEvent: 'titleEvent',
+          titleEvent: _titleEvent!,
           dateEvent: _selectedDay!,
-          timeEvent: TimeOfDay(hour: 13, minute: 20)));
+          timeEvent: _timeEvent!));
       _selectedEvents.value = _getEventsForDay(_selectedDay!);
     });
   }

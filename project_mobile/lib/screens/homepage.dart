@@ -10,16 +10,6 @@ import 'package:project_mobile/services/auth.dart';
 
 //screen che contiene un menu laterale a scomparsa
 class HomePage extends StatefulWidget {
-  //costruttore privato
-  HomePage._();
-  //istanza unica
-  static HomePage _instance = HomePage._();
-  //metodo factory
-  factory HomePage() {
-    return _instance;
-  }
-
-  int counter = 0;
 
   @override
   _HomePageState createState() => _HomePageState();
