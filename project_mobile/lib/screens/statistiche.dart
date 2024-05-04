@@ -29,10 +29,56 @@ class _StatisticheState extends State<Statistiche> {
       body: SingleChildScrollView(
           child: Column(
         children: [
+          Divider(thickness: 5),
           //grafico con le barre,
-          MyBarChart(exams: voti),
+          Container(
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: Colors.deepPurple.withOpacity(0.1),
+              
+            ),
+            //padding: EdgeInsets.all(30),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 5),
+                  child: Text('Bar Chart',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                MyBarChart(exams: voti),
+              ],
+            ),
+          ),
+          Divider(thickness: 5),
           //grafico a torta,
-          MyPieChart(),
+          Container(
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: Colors.deepPurple.withOpacity(0.1),
+              
+            ),
+            //padding: EdgeInsets.all(30),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 5),
+                  child: Text('Pie Chart',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                MyPieChart(),
+              ],
+            ),
+          ),
           //media e roba varia
         ],
       )),

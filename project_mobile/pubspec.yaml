@@ -87,6 +87,7 @@ flutter:
     - assets/sfondo_login.jpg ##usata
     - assets/login_background.jpg ##usata
     - assets/fotoToDoList.jpg ##usata
+    - assets/fotoDrawer.jpg ##usata
   #  - assets/fotoWeekPage.jpg
     - assets/fotoWeekPage(2).jpg ##usata
   #  - assets/fotoWeekPage(3).jpg

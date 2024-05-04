@@ -21,10 +21,10 @@ class _ExamPageState extends State<ExamPage> {
   List<ExamItem> items = [];
 
   //lista che deve contenere i voti degli esami
-  List<double> degree = [];
+  //List<double> degree = [];
 
   //variabile che dovrà contenere
-  double currentAverage = 0;
+  //double currentAverage = 0;
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _ExamPageState extends State<ExamPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           //WIDGET PER MEDIA E CFU
-          AverageWidget(average: currentAverage / degree.length),
+          //AverageWidget(average: currentAverage / degree.length),
           //grafico
 
           //la lista va sotto
@@ -184,7 +184,7 @@ class _ExamPageState extends State<ExamPage> {
   //funzione che chiama il costruttore di list item e lo inserisce nella lista
   void insertItem(String esame, int voto, String data) {
     final newItem = ExamItem(esame: esame, voto: voto, data: data);
-    currentAverage += voto; //aggiornamento della media
+    //currentAverage += voto; //aggiornamento della media
     items.insert(0, newItem); //inserisco tra gli elemnti dell'animated list
     listKey.currentState!.insertItem(0, duration: Duration(milliseconds: 250));
     ExamPreferences.setListItem(items);

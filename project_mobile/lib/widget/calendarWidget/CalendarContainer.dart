@@ -159,7 +159,7 @@ class _CalendarContainerState extends State<CalendarContainer> {
 
     // Use String formatting for desired output
     String formattedTime =
-        '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+        '${hour.toString()}:${minute.toString().padLeft(2, '0')}';
 
     // Check if it's past noon and add meridian indicator
     if (hour >= 12) {

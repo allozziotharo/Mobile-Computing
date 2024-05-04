@@ -18,7 +18,7 @@ class MyBarChart extends StatelessWidget {
           barGroups: barGroups(exams),
           gridData: FlGridData(show: false),
           alignment: BarChartAlignment.spaceAround,
-          maxY: 30,
+          maxY: 40,
         ),
       ),
     );

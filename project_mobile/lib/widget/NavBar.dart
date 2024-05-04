@@ -16,14 +16,14 @@ class NavBar extends StatelessWidget {
           //prima parte del menu quella che contieni gli info dell'user
           UserAccountsDrawerHeader(
             accountName:
-                const Text('Germano', style: TextStyle(color: Colors.white)),
-            accountEmail: const Text('fragermano@numberone.com',
+                const Text('User:', style: TextStyle(color: Colors.white)),
+            accountEmail: const Text('01fgermano@gmail.com',
                 style: TextStyle(color: Colors.white)),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.asset(
                   //immagine salvata sul dispositivo si usa in questo modo
-                  'assets/prova.jpg', //devi prima aggiungere la risorsa nella cartella assets
+                  'assets/iconaApp.png', //devi prima aggiungere la risorsa nella cartella assets
                   width: 90,
                   height: 90,
                   fit: BoxFit.cover,
@@ -32,33 +32,45 @@ class NavBar extends StatelessWidget {
             ), //Circle avatar
             decoration: BoxDecoration(
               image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage("assets/userbackground.jpg"),
+                fit: BoxFit.fitHeight,
+                image: AssetImage("assets/fotoDrawer.jpg"),
               ),
             ),
           ), //userheader
 
           //lista delle sezioni del menù laterale
           //IN EVIDENZA
-          ListTile(
+          /*ListTile(
             leading: Icon(Icons.favorite),
             title: const Text('In Evidenza'),
             onTap: () => null,
-          ),
+          ),*/
           //LINK
-          ListTile(
+          /*ListTile(
             leading: Icon(Icons.share),
             title: const Text('Links'),
             onTap: () => Navigator.pushNamed(context, route.statistiche),
-          ),
+          ),*/
           //CALENDARIO
           ListTile(
             leading: Icon(Icons.date_range),
-            title: const Text('Calendario'),
+            title: const Text('Calendar'),
             onTap: () => Navigator.pushNamed(context, route.calendarPage),
           ),
-          //NOTIFICHE
+          //WEEKPAGE
           ListTile(
+            leading: Icon(Icons.table_rows_rounded),
+            title: const Text('Timetable'),
+            onTap: () => Navigator.pushNamed(context, route.weekPage),
+          ),
+          //STATISTICHE
+          ListTile(
+            leading: Icon(Icons.bar_chart_rounded),
+            title: const Text('Stats page'),
+            onTap: () => Navigator.pushNamed(context, route.statistiche),
+          ),
+          //NOTIFICHE
+          /*ListTile(
             leading: Icon(Icons.notifications),
             title: Text('Notifiche'),
             onTap: () => null,
@@ -77,7 +89,7 @@ class NavBar extends StatelessWidget {
                 ),
               ),
             ),
-          ),
+          ),*/
           //divider aggiunge una linea di separazione
           Divider(),
           //IMPOSTAZIONI
@@ -91,18 +103,9 @@ class NavBar extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: const Text('Logout'),
-            onTap: () => Navigator.pushNamed(context, route.loginPage),
+            onTap: () => Navigator.pushNamed(context, route.authPage),
           ),
-          ListTile(
-            leading: Icon(Icons.wheelchair_pickup_outlined),
-            title: const Text('classes page'),
-            onTap: () => Navigator.pushNamed(context, route.weekPage),
-          ),
-          ListTile(
-            leading: Icon(Icons.architecture_outlined),
-            title: const Text('stats pagw'),
-            onTap: () => Navigator.pushNamed(context, route.statistiche),
-          )
+
           //fine lista
         ],
       ),

@@ -307,7 +307,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               onTap: (){
-                Navigator.pushNamed(context, route.calendarPage);
+                Navigator.pushNamed(context, route.statistiche);
               }
             ),
           ),

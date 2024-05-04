@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 //faccio l'import delle pagine in cui voglio navigare
 
 import 'package:project_mobile/screens/homepage.dart';
-import 'package:project_mobile/screens/loginpage.dart';
+import 'package:project_mobile/screens/authpage.dart';
 import 'package:project_mobile/screens/settingspage.dart';
 import 'package:project_mobile/screens/signup.dart';
 import 'package:project_mobile/screens/calendarpage.dart';
@@ -15,7 +15,7 @@ import 'package:project_mobile/screens/todolistpage/todolistpage.dart';
 import 'package:project_mobile/screens/statistiche.dart';
 
 //nomi da dare alle pagine in cui andare attraverso delle stringhe costanti
-const String loginPage = 'login';
+const String authPage = 'auth';
 const String homePage = 'home';
 const String settingsPage = 'settings';
 const String signupPage = 'signup';
@@ -28,8 +28,8 @@ const String statistiche = 'statistiche';
 //il controller che gestirà il passaggio da una pagina ad un'altra
 Route<dynamic> controller(RouteSettings settings) {
   switch (settings.name) {
-    case loginPage:
-      return MaterialPageRoute(builder: (context) => LoginPage());
+    case authPage:
+      return MaterialPageRoute(builder: (context) => AuthPage());
     case homePage:
       return MaterialPageRoute(builder: (context) => HomePage());
     case settingsPage:
