@@ -256,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              onTap: () => Navigator.pushNamed(context, route.listPage),
+              onTap: () => Navigator.pushNamed(context, route.examPage),
             ),
           ),
                     

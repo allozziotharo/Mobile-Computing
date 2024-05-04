@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:project_mobile/preferences/week_pref.dart';
 import 'package:project_mobile/widget/DayItem.dart';
 import 'package:project_mobile/widget/NavBar.dart';
+import 'package:project_mobile/route/route.dart' as route;
 import 'package:project_mobile/widget/flashMessages/confirmMessage.dart';
 import 'package:project_mobile/widget/flashMessages/warningMessage.dart';
 import 'package:project_mobile/widget/flashMessages/errorMessage.dart';
@@ -142,8 +144,43 @@ class _WeekPageState extends State<WeekPage> {
             ))
         ],
       ),
+      bottomNavigationBar: Container(
+        color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          child: GNav(
+              backgroundColor: Colors.black,
+              color: Colors.white,
+              tabBackgroundColor: Colors.grey.shade800,
+              padding: EdgeInsets.all(16),
+              gap: 8,
+              tabs: [
+                GButton(
+                  icon: Icons.home,
+                  text: 'home',
+                  onPressed: () => Navigator.pushNamed(context, route.homePage),
+                ),
+                GButton(icon: Icons.favorite_border, text: 'likes'),
+                GButton(icon: Icons.search, text: 'search'),
+                GButton(
+                  icon: Icons.add,
+                  text: 'add class',
+                  onPressed: () {
+                    if (_daySelected == "") {
+                      showWarningMessage(
+                          "you must select a day first! BITCHASSNIGGHI",
+                          context);
+                    } else {
+                      readData();
+                    }
+                  },
+                ),
+              ]),
+        ),
+      ),
+
       //BOTTOM NAVIGATION
-      bottomNavigationBar: BottomNavigationBar(items: [
+      /*bottomNavigationBar: BottomNavigationBar(items: [
         //il primo elemento è in blu sto nero
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
         BottomNavigationBarItem(icon: Icon(Icons.save_rounded), label: 'save'),
@@ -163,7 +200,7 @@ class _WeekPageState extends State<WeekPage> {
                   color: Colors.white,
                 )),
             label: 'add el to list'),
-      ]),
+      ]),*/
     );
   }
   /**************** FINE BUILD ****************/

@@ -19,7 +19,7 @@ import 'package:project_mobile/screens/homepage.dart';
 //import 'package:project_mobile/screens/calendar.dart';
 //import 'package:project_mobile/screens/listpage.dart';
 import 'package:project_mobile/screens/authpage.dart';
-import 'package:project_mobile/preferences/list_pref.dart';
+import 'package:project_mobile/preferences/exam_pref.dart';
 
 import 'package:project_mobile/screens/todolistpage/todolistpage.dart';
 
@@ -34,7 +34,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await ToDoListPreferences.init();
-  await ListPreferences.init();
+  await ExamPreferences.init();
   runApp(MyApp());
 }
 

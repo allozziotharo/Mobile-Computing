@@ -1,28 +1,34 @@
 //materiale standard
 import 'package:flutter/material.dart';
+import 'package:project_mobile/widget/calendarWidget/CalendarContainer.dart';
+import 'package:project_mobile/widget/calendarWidget/Event.dart';
+import 'package:project_mobile/widget/calendarWidget/MyTimePicker.dart';
+
 //import per il calendario
 import 'package:table_calendar/table_calendar.dart';
 
 //import per usare route
-import 'package:project_mobile/widget/calendarWidget/Event.dart';
 
-class Calendar extends StatefulWidget {
+class CalendarPage extends StatefulWidget {
   @override
-  _CalendarState createState() => _CalendarState();
+  _CalendarPageState createState() => _CalendarPageState();
 }
 
-class _CalendarState extends State<Calendar> {
+class _CalendarPageState extends State<CalendarPage> {
   /*ATTRIBUTI*/
-  DateTime _focusedDay = DateTime.now(); //giorno evidenziato
+  String? _titleEvent;
+  TimeOfDay? _timeEvent;
   DateTime? _selectedDay; //giorno selezionato
+  DateTime _focusedDay = DateTime.now(); //giorno evidenziato
 
-  TextEditingController _eventController = TextEditingController();
+  //TextEditingController _eventController = TextEditingController();
 
   //eventi del giorno
   late final ValueNotifier<List<Event>> _selectedEvents;
 
   //mappa giorno -> lista di eventi
   Map<DateTime, List<Event>> events = {};
+
   /*FINE ATTRIBUTI*/
 
   //per inizializzare lo stato?
@@ -66,42 +72,13 @@ class _CalendarState extends State<Calendar> {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add_circle_outline_sharp),
           onPressed: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    scrollable: true,
-                    title: const Text("Event Name"),
-                    content: Padding(
-                        padding: EdgeInsets.all(8),
-                        child: TextField(
-                          controller: _eventController,
-                        )),
-                    actions: [
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            if (events[_selectedDay] == null) {
-                              events[_selectedDay!] = <Event>[];
-                            }
-                            events[_selectedDay]!
-                                .add(Event(_eventController.text));
-                            _eventController.text = "";
-                            _selectedEvents.value =
-                                _getEventsForDay(_selectedDay!);
-                          });
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("submit"),
-                      )
-                    ],
-                  );
-                });
+            readEventData();
           }),
     );
   }
   /*FINE BUILD*/
 
+  /*BODY DELLA PAGINA CONTIENE IL CALENDARIO E LA LISTA DEGLI EVENTI DEL GIORNO*/
   Widget calendar() {
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -131,22 +108,72 @@ class _CalendarState extends State<Calendar> {
                   return ListView.builder(
                       itemCount: value.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                          decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: ListTile(
-                            onTap: () => null,
-                            title: Text("${value[index].title}"),
-                          ),
-                        );
+                        return CalendarContainer(event: value[index]);
                       });
                 }),
           ),
         ],
+      ),
+    );
+  }
+
+  void readEventData() {
+    //con questo dialog faccio inserire all'utente il titolo dell'evento
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            scrollable: true,
+            title: const Text("bla"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                buildTextField("Event Name"),
+                MyTimePicker(
+                    pickerText: "insert event time",
+                    onTimeConfirmed: (time) {
+                      _timeEvent = time;
+                    }),
+              ],
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  insertEvent(_titleEvent!, _timeEvent!);
+                  Navigator.of(context).pop();
+                },
+                child: const Text("insert"),
+              )
+            ],
+          );
+        });
+  }
+
+  //funzione che fa l'inserimento dell'evento (prende come parametro String, e orario)
+  //il giorno lo prende dal giorno evidenziato nel calendario
+  void insertEvent(String titleEvent, TimeOfDay timeEvent) {
+    setState(() {
+      if (events[_selectedDay] == null) {
+        //se per il giorno selezionato non c'è nulla
+        events[_selectedDay!] = <Event>[]; //allora metto una lista vuota
+      }
+      events[_selectedDay]!.add(Event(
+          //poi aggiungo alla lista
+          titleEvent: 'titleEvent',
+          dateEvent: _selectedDay!,
+          timeEvent: TimeOfDay(hour: 13, minute: 20)));
+      _selectedEvents.value = _getEventsForDay(_selectedDay!);
+    });
+  }
+
+  // restituisce il textfield
+  Widget buildTextField(String hintText) {
+    return TextField(
+      onChanged: (value) {
+        _titleEvent = value;
+      },
+      decoration: InputDecoration(
+        hintText: hintText,
       ),
     );
   }

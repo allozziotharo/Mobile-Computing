@@ -42,25 +42,25 @@ class NavBar extends StatelessWidget {
           //IN EVIDENZA
           ListTile(
             leading: Icon(Icons.favorite),
-            title: const Text('Highlighted'),
+            title: const Text('In Evidenza'),
             onTap: () => null,
           ),
           //LINK
           ListTile(
             leading: Icon(Icons.share),
             title: const Text('Links'),
-            onTap: () => null,
+            onTap: () => Navigator.pushNamed(context, route.statistiche),
           ),
           //CALENDARIO
           ListTile(
             leading: Icon(Icons.date_range),
-            title: const Text('Calendar'),
+            title: const Text('Calendario'),
             onTap: () => Navigator.pushNamed(context, route.calendarPage),
           ),
           //NOTIFICHE
           ListTile(
             leading: Icon(Icons.notifications),
-            title: Text('Notifications'),
+            title: Text('Notifiche'),
             onTap: () => null,
             trailing: ClipOval(
               child: Container(
@@ -69,12 +69,11 @@ class NavBar extends StatelessWidget {
                 height: 20,
                 child: Center(
                   child: const Text(
-                    '1', //ora metto uno per comodità qui bisogna aggiungere la logica per cui si aggiunge una notifica
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
-                  ),
+                      '1', //ora metto uno per comodità qui bisogna aggiungere la logica per cui si aggiunge una notifica
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      )),
                 ),
               ),
             ),
@@ -84,8 +83,8 @@ class NavBar extends StatelessWidget {
           //IMPOSTAZIONI
           ListTile(
             leading: Icon(Icons.settings),
-            title: const Text('Settings'),
-            onTap: () => Navigator.pushNamed(context, route.settingsPage),
+            title: const Text('Impostazioni'),
+            onTap: () => Navigator.pushNamed(context, route.examPage),
           ),
           Divider(),
           //LOGOUT
@@ -98,6 +97,11 @@ class NavBar extends StatelessWidget {
             leading: Icon(Icons.wheelchair_pickup_outlined),
             title: const Text('classes page'),
             onTap: () => Navigator.pushNamed(context, route.weekPage),
+          ),
+          ListTile(
+            leading: Icon(Icons.architecture_outlined),
+            title: const Text('stats pagw'),
+            onTap: () => Navigator.pushNamed(context, route.statistiche),
           )
           //fine lista
         ],
