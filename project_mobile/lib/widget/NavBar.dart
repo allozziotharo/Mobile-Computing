@@ -95,7 +95,7 @@ class NavBar extends StatelessWidget {
           //IMPOSTAZIONI
           ListTile(
             leading: Icon(Icons.settings),
-            title: const Text('Impostazioni'),
+            title: const Text('Settings'),
             onTap: () => Navigator.pushNamed(context, route.examPage),
           ),
           Divider(),

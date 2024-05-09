@@ -168,7 +168,7 @@ class _WeekPageState extends State<WeekPage> {
                   onPressed: () {
                     if (_daySelected == "") {
                       showWarningMessage(
-                          "you must select a day first! BITCHASSNIGGHI",
+                          "you must select a day first!",
                           context);
                     } else {
                       readData();
